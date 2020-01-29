@@ -1,0 +1,27 @@
+{
+  "name": "portway-docs",
+  "version": "1.0.0",
+  "description": "API docs for Portway",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BonkeyBong/portway-docs.git"
+  },
+  "author": "BonkeyBong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BonkeyBong/portway-docs/issues"
+  },
+  "homepage": "https://github.com/BonkeyBong/portway-docs#readme",
+  "devDependencies": {
+    "redoc": "^2.0.0-rc.20",
+    "speccy": "^0.11.0"
+  },
+  "dependencies": {}
+}
