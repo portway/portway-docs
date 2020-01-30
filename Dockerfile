@@ -1,21 +1,17 @@
-FROM openjdk:latest
+FROM node:12.13.0-alpine
 
 # The base node image sets a very verbose log level.
 ENV NPM_CONFIG_LOGLEVEL warn
-ENV NODE_ENV development
 
-WORKDIR /docs
-
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
-RUN source ~./bash_profile
-RUN nvm install 12.13.0
+WORKDIR /portway_docs
 
 # Only copy package.json first to take advantage of docker caching
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --only=production
 
-# COPY . .
-COPY docs/ ./source/
+COPY index.js ./
+COPY output/ ./output/
+COPY static_pages/ ./static_pages/
 
-RUN npx openapi-generator generate --skip-validate-spec -i ./source -g ruby -o /output
+CMD ["node", "index.js"]
