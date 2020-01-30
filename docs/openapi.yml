@@ -5,10 +5,10 @@ info:
   description: Public API spec for Portway
   contact:
     name: Portway Team
-    email: info@bonkeybong.com
-    url: http://www.bonkeybong.com
+    email: feedback@bonkeybong.com
+    url: https://www.getportway.com
 servers:
-  - url: http://localhost:3001
+  - url: https://api.portway.app
 paths:
   /projects:
     get:
