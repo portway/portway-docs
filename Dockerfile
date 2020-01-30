@@ -12,5 +12,6 @@ RUN npm install --only=production
 
 COPY index.js ./
 COPY output/ ./output/
+COPY static_pages/ ./static_pages/
 
 CMD ["node", "index.js"]
