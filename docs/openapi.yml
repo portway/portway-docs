@@ -13,7 +13,7 @@ tags:
   - name: Projects
   - name: Documents
   - name: Documents With Fields
-    description: Document objects with a populated fields array. Use draft=true query param on GET requyests to fetch unpublished fields.
+    description: Document objects with a populated fields array. Use draft=true query param on GET requests to fetch unpublished fields.
   - name: Document Publish
   - name: Fields
     description: Published or Unpublished fields. Use draft=true query param on GET requests to fetch unpublished fields.
