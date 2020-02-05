@@ -1,6 +1,9 @@
 # portway-docs
 API docs for Portway
 
+## Deployment
+See [Deploying Portway Docs](https://portway.app/d/project/3/document/5)
+
 ## Linting
 Run `npx speccy lint docs/openapi.yml`
 
