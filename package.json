@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "generate-docs": "npx redoc-cli bundle docs/openapi.yml -o output/api.html",
+    "generate-docs": "npx openapi-filter --strip -- docs/openapi.yml docs/pre-processed.yml && npx redoc-cli bundle docs/pre-processed.yml -o output/api.html --options.hideDownloadButton=true",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/BonkeyBong/portway-docs#readme",
   "devDependencies": {
+    "openapi-filter": "^1.5.1",
     "redoc": "^2.0.0-rc.20",
     "speccy": "^0.11.0"
   },

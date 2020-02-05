@@ -2,19 +2,69 @@ openapi: '3.0.2'
 info:
   version: 1.0.0
   title: Portway API
-  description: Public API spec for Portway
   contact:
     name: Portway Team
     email: feedback@bonkeybong.com
-    url: https://www.getportway.com
+    url: https://getportway.com
+  description: |
+    The Portway API.
+
+    # Introduction
+    You are viewing a beta version of the Portway API spec. If you have any feedback or questions,
+    please [contact us](mailto:feedback@bonkeybong.com).
+
+    # Authentication
+    The Portway API has one form of authentication, API key.
 servers:
   - url: https://api.portway.app
+tags:
+  - name: Projects
+    description: Organization projects.
+  - name: Documents
+    description: Documents for a given project.
+  - name: Fields
+    description: Published or Unpublished fields. Use draft=true query param on GET requests to fetch unpublished fields.
+  - name: Project Assignments
+    description: Project assignments. Use includeUser=true query param on GET requests to include full user objects.
+  - name: Project Tokens
+    description: Project API access tokens
+  - name: Organizations
+    description: PRIVATE - GET/UPDATE an organization.
+  - name: Billing
+    description: PRIVATE - Billing information for an organization.
+  - name: Users
+    description: Portway users in your organization
+  - name: User Assignments
+    description: Project assignments for a specific user
+  - name: document_model
+    x-displayName: Document Model
+    description: |
+      <SchemaDefinition schemaRef="./definitions/document.yml#/Document" />
+x-tagGroups:
+  - name: Projects
+    tags:
+      - Projects
+      - Project Tokens
+      - Project Assignments
+  - name: Documents
+    tags:
+      - Documents
+      - Fields
+  - name: Users
+    tags:
+      - Users
+      - User Assignments
+  - name: Models
+    tags:
+      - document_ model
 paths:
   /projects:
     get:
       description: |
         Returns all projects that the user has access to
       operationId: findProjects
+      tags:
+        - Projects
       responses:
         '200':
           description: projects response
@@ -37,6 +87,8 @@ paths:
     post:
       description: Creates a new project
       operationId: addProject
+      tags:
+        - Projects
       requestBody:
         description: Project to add
         required: true
@@ -64,6 +116,8 @@ paths:
     get:
       description: Returns a project based on a single ID
       operationId: findProjectById
+      tags:
+        - Projects
       parameters:
         - name: projectId
           in: path
@@ -91,6 +145,8 @@ paths:
     put:
       description: Update a project based on a single ID - full or partial update
       operationId: updateProject
+      tags:
+        - Projects
       parameters:
         - name: projectId
           in: path
@@ -126,6 +182,8 @@ paths:
     delete:
       description: deletes a single project based on the ID supplied
       operationId: deleteProject
+      tags:
+        - Projects
       parameters:
         - name: projectId
           in: path
@@ -148,6 +206,8 @@ paths:
     get:
       description: Returns all documents that the user has access to for the given project id
       operationId: findDocuments
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -181,6 +241,8 @@ paths:
     post:
       description: Creates a new document
       operationId: addDocument
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -217,6 +279,8 @@ paths:
     get:
       description: Returns a document based on a single ID
       operationId: findDocumentById
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -255,6 +319,8 @@ paths:
     put:
       description: Update a document based on a single ID - full or partial update
       operationId: updateDocument
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -295,6 +361,8 @@ paths:
     delete:
       description: deletes a single document based on the ID supplied
       operationId: deleteDocument
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -324,6 +392,8 @@ paths:
       description: |
         Returns all project user assignments
       operationId: findProjectUsers
+      tags:
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -331,6 +401,11 @@ paths:
           required: true
           schema:
             type: integer
+        - name: includeUser
+          in: query
+          description: setting to true with include user objects in request
+          schema:
+            type: boolean
 
       responses:
         '200':
@@ -353,6 +428,8 @@ paths:
     post:
       description: Creates a new project user assignment
       operationId: addProjectUser
+      tags:
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -389,6 +466,8 @@ paths:
     get:
       description: Returns a project user assignment based on a single ID
       operationId: findProjectUserById
+      tags:
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -422,6 +501,8 @@ paths:
     put:
       description: Update a project user assignment based on a single ID
       operationId: updateProjectUser
+      tags:
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -462,6 +543,8 @@ paths:
     delete:
       description: deletes a single project user assignment based on the ID supplied
       operationId: deleteProjectUser
+      tags:
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -485,12 +568,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  
+
   /projects/{projectId}/tokens:
     get:
       description: |
         Returns all project tokens
       operationId: findProjectTokens
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -520,6 +605,8 @@ paths:
     post:
       description: Creates a new project token
       operationId: addProjectToken
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -556,6 +643,8 @@ paths:
     get:
       description: Returns a project token based on a single ID
       operationId: findProjectTokenById
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -589,6 +678,8 @@ paths:
     put:
       description: Update a project token based on a single ID
       operationId: updateProjectToken
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -629,6 +720,8 @@ paths:
     delete:
       description: deletes a single project token based on the ID supplied
       operationId: deleteProjectToken
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -657,6 +750,8 @@ paths:
     get:
       description: Returns a document based on a single ID
       operationId: findPopulatedDocumentById
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -691,6 +786,8 @@ paths:
     post:
       description: Publishes a document based on ID
       operationId: publishDocument
+      tags:
+        - Documents
       parameters:
         - name: documentId
           in: path
@@ -708,11 +805,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  
+
   /documents/{documentId}/unpublish:
     post:
       description: Unpublishes a document based on ID
       operationId: unpublishDocument
+      tags:
+        - Documents
       parameters:
         - name: documentId
           in: path
@@ -730,12 +829,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    
+
   /documents/{documentId}/fields:
     get:
       description: |
         Returns all fields that the user has access to for the given project/document ids
       operationId: findFields
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -770,6 +871,8 @@ paths:
     post:
       description: Creates a new field
       operationId: addField
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -810,6 +913,8 @@ paths:
     get:
       description: Returns a field based on a single ID
       operationId: findFieldById
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -843,6 +948,8 @@ paths:
     put:
       description: Update a field based on a single ID - full or partial update
       operationId: updateField
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -887,6 +994,8 @@ paths:
     delete:
       description: deletes a single field based on the ID supplied
       operationId: deleteField
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -915,6 +1024,8 @@ paths:
     put:
       description: Update field order based on a field ID
       operationId: updateFieldOrder
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -948,8 +1059,11 @@ paths:
 
   /organizations/{organizationId}:
     get:
+      x-internal: true
       description: Returns an organization based on a single ID
       operationId: findOrganizationById
+      tags:
+        - Organizations
       parameters:
         - name: organizationId
           in: path
@@ -975,8 +1089,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      x-internal: true
       description: Update an organization based on a single ID
       operationId: updateOrganization
+      tags:
+        - Organizations
       parameters:
         - name: organizationId
           in: path
@@ -1008,10 +1125,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /organizations/{organizationId}/avatar:  
+  /organizations/{organizationId}/avatar:
     put:
+      x-internal: true
       description: Update an organizations avatar based on a single ID
       operationId: updateOrganizationAvatar
+      tags:
+        - Organizations
       parameters:
         - name: organizationId
           in: path
@@ -1043,10 +1163,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /organizations/{organizationId}/billing:  
+  /organizations/{organizationId}/billing:
     get:
+      x-internal: true
       description: Get an organizations billing based on a single ID
       operationId: getOrganizationBilling
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1070,10 +1193,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  
+
     put:
+      x-internal: true
       description: Update an organizations billing based on a single ID
       operationId: updateOrganizationBilling
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1107,8 +1233,11 @@ paths:
 
   /organizations/{organizationId}/billing/cancel:
     post:
+      x-internal: true
       description: initiates subscription cancellation for organization
       operationId: cancelOrganizationSubscription
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1129,8 +1258,11 @@ paths:
 
   /organizations/{organizationId}/plan:
      put:
+      x-internal: true
       description: Update an organizations subscription plan based on a single ID
       operationId: updateOrganizationPlan
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1154,11 +1286,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  
+
   /organizations/{organizationId}/seats:
     get:
+      x-internal: true
       description: Get organization seat data
       operationId: getOrganizationSeats
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1180,8 +1315,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      x-internal: true
       description: Update the total seats on an organization, only applies to organizations subscribed to a multi user plan
       operationId: updateOrganizationSeats
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1214,6 +1352,8 @@ paths:
     get:
       description: Returns all users that the user has access to
       operationId: findUsers
+      tags:
+        - Users
       parameters:
         - name: page
           in: query
@@ -1260,6 +1400,8 @@ paths:
     post:
       description: Creates a new user
       operationId: addUser
+      tags:
+        - Users
       requestBody:
         description: User to add
         required: true
@@ -1287,6 +1429,8 @@ paths:
     get:
       description: Returns a user based on a single ID
       operationId: findUserById
+      tags:
+        - Users
       parameters:
         - name: userId
           in: path
@@ -1314,6 +1458,8 @@ paths:
     put:
       description: Update a user based on a single ID - full or partial update
       operationId: updateUser
+      tags:
+        - Users
       parameters:
         - name: userId
           in: path
@@ -1349,6 +1495,8 @@ paths:
     delete:
       description: deletes a single user based on the ID supplied
       operationId: deleteUser
+      tags:
+        - Users
       parameters:
         - name: userId
           in: path
@@ -1371,6 +1519,8 @@ paths:
     put:
       description: Update a user's organization role based on a single ID
       operationId: updateUserOrgRole
+      tags:
+        - Users
       parameters:
         - name: userId
           in: path
@@ -1399,6 +1549,8 @@ paths:
     get:
       description: Returns user assignments based on user id
       operationId: findUserAssignmentsById
+      tags:
+        - User Assignments
       parameters:
         - name: userId
           in: path
@@ -1429,6 +1581,8 @@ paths:
     get:
       description: Returns projects based on user id
       operationId: findUserProjectsById
+      tags:
+        - User Assignments
       parameters:
         - name: userId
           in: path
@@ -1455,7 +1609,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-     
+
 components:
   schemas:
     Error:
