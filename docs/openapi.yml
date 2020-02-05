@@ -11,23 +11,29 @@ servers:
   - url: https://api.portway.app
 tags:
   - name: Projects
+    description: Organization projects.
   - name: Documents
+    description: Documents for a given project.
   - name: Documents With Fields
     description: Document objects with a populated fields array. Use draft=true query param on GET requests to fetch unpublished fields.
   - name: Document Publish
+    description: Trigger publishing/unpublishing of a document.
   - name: Fields
     description: Published or Unpublished fields. Use draft=true query param on GET requests to fetch unpublished fields.
   - name: Field Order
+    description: The order position of a given field.
   - name: Project User Assignments
     description: User assignment objects for a given project. Use includeUser=true query param on GET requests to include full user objects.
   - name: Project Tokens
     description: API access tokens for a project.
   - name: Organizations
+    description: GET/UPDATE an organization.
   - name: Billing
     description: Billing information for an organization.
   - name: Users
+    description: Organization users.
   - name: User Role
-    description: User role within organization
+    description: User role within organization.
   - name: User Project Assignments
     description: Project assignment objects for a given user.
   - name: User Projects
