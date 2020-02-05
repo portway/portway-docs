@@ -2,11 +2,19 @@ openapi: '3.0.2'
 info:
   version: 1.0.0
   title: Portway API
-  description: Public API spec for Portway
   contact:
     name: Portway Team
     email: feedback@bonkeybong.com
-    url: https://www.getportway.com
+    url: https://getportway.com
+  description: |
+    The Portway API.
+
+    # Introduction
+    You are viewing a beta version of the Portway API spec. If you have any feedback or questions,
+    please [contact us](mailto:feedback@bonkeybong.com).
+
+    # Authentication
+    The Portway API has one form of authentication, API key.
 servers:
   - url: https://api.portway.app
 tags:
@@ -16,8 +24,8 @@ tags:
     description: Documents for a given project.
   - name: Fields
     description: Published or Unpublished fields. Use draft=true query param on GET requests to fetch unpublished fields.
-  - name: Assignments
-    description: Assignments for users and projects. Use includeUser=true query param on GET requests to include full user objects.
+  - name: Project Assignments
+    description: Project assignments. Use includeUser=true query param on GET requests to include full user objects.
   - name: Project Tokens
     description: Project API access tokens
   - name: Organizations
@@ -26,6 +34,29 @@ tags:
     description: PRIVATE - Billing information for an organization.
   - name: Users
     description: Portway users in your organization
+  - name: User Assignments
+    description: Project assignments for a specific user
+  - name: document_model
+    x-displayName: Document Model
+    description: |
+      <SchemaDefinition schemaRef="./definitions/document.yml#/Document" />
+x-tagGroups:
+  - name: Projects
+    tags:
+      - Projects
+      - Project Tokens
+      - Project Assignments
+  - name: Documents
+    tags:
+      - Documents
+      - Fields
+  - name: Users
+    tags:
+      - Users
+      - User Assignments
+  - name: Models
+    tags:
+      - document_ model
 paths:
   /projects:
     get:
@@ -362,7 +393,7 @@ paths:
         Returns all project user assignments
       operationId: findProjectUsers
       tags:
-        - Assignments
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -398,7 +429,7 @@ paths:
       description: Creates a new project user assignment
       operationId: addProjectUser
       tags:
-        - Assignments
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -436,7 +467,7 @@ paths:
       description: Returns a project user assignment based on a single ID
       operationId: findProjectUserById
       tags:
-        - Assignments
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -471,7 +502,7 @@ paths:
       description: Update a project user assignment based on a single ID
       operationId: updateProjectUser
       tags:
-        - Assignments
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -513,7 +544,7 @@ paths:
       description: deletes a single project user assignment based on the ID supplied
       operationId: deleteProjectUser
       tags:
-        - Assignments
+        - Project Assignments
       parameters:
         - name: projectId
           in: path
@@ -1028,6 +1059,7 @@ paths:
 
   /organizations/{organizationId}:
     get:
+      x-internal: true
       description: Returns an organization based on a single ID
       operationId: findOrganizationById
       tags:
@@ -1057,6 +1089,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      x-internal: true
       description: Update an organization based on a single ID
       operationId: updateOrganization
       tags:
@@ -1094,6 +1127,7 @@ paths:
 
   /organizations/{organizationId}/avatar:
     put:
+      x-internal: true
       description: Update an organizations avatar based on a single ID
       operationId: updateOrganizationAvatar
       tags:
@@ -1131,6 +1165,7 @@ paths:
 
   /organizations/{organizationId}/billing:
     get:
+      x-internal: true
       description: Get an organizations billing based on a single ID
       operationId: getOrganizationBilling
       tags:
@@ -1160,6 +1195,7 @@ paths:
                 $ref: '#/components/schemas/Error'
 
     put:
+      x-internal: true
       description: Update an organizations billing based on a single ID
       operationId: updateOrganizationBilling
       tags:
@@ -1197,6 +1233,7 @@ paths:
 
   /organizations/{organizationId}/billing/cancel:
     post:
+      x-internal: true
       description: initiates subscription cancellation for organization
       operationId: cancelOrganizationSubscription
       tags:
@@ -1221,6 +1258,7 @@ paths:
 
   /organizations/{organizationId}/plan:
      put:
+      x-internal: true
       description: Update an organizations subscription plan based on a single ID
       operationId: updateOrganizationPlan
       tags:
@@ -1251,6 +1289,7 @@ paths:
 
   /organizations/{organizationId}/seats:
     get:
+      x-internal: true
       description: Get organization seat data
       operationId: getOrganizationSeats
       tags:
@@ -1276,6 +1315,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      x-internal: true
       description: Update the total seats on an organization, only applies to organizations subscribed to a multi user plan
       operationId: updateOrganizationSeats
       tags:
@@ -1510,7 +1550,7 @@ paths:
       description: Returns user assignments based on user id
       operationId: findUserAssignmentsById
       tags:
-        - Assignments
+        - User Assignments
       parameters:
         - name: userId
           in: path
@@ -1542,7 +1582,7 @@ paths:
       description: Returns projects based on user id
       operationId: findUserProjectsById
       tags:
-        - Assignments
+        - User Assignments
       parameters:
         - name: userId
           in: path
