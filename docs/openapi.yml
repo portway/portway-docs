@@ -9,12 +9,37 @@ info:
     url: https://www.getportway.com
 servers:
   - url: https://api.portway.app
+tags:
+  - name: Projects
+  - name: Documents
+  - name: Documents With Fields
+    description: Document objects with a populated fields array. Use draft=true query param on GET requyests to fetch unpublished fields.
+  - name: Document Publish
+  - name: Fields
+    description: Published or Unpublished fields. Use draft=true query param on GET requests to fetch unpublished fields.
+  - name: Field Order
+  - name: Project User Assignments
+    description: User assignment objects for a given project. Use includeUser=true query param on GET requests to include full user objects.
+  - name: Project Tokens
+    description: API access tokens for a project.
+  - name: Organizations
+  - name: Billing
+    description: Billing information for an organization.
+  - name: Users
+  - name: User Role
+    description: User role within organization
+  - name: User Project Assignments
+    description: Project assignment objects for a given user.
+  - name: User Projects
+    description: All projects a given user can access.
 paths:
   /projects:
     get:
       description: |
         Returns all projects that the user has access to
       operationId: findProjects
+      tags:
+        - Projects
       responses:
         '200':
           description: projects response
@@ -37,6 +62,8 @@ paths:
     post:
       description: Creates a new project
       operationId: addProject
+      tags:
+        - Projects
       requestBody:
         description: Project to add
         required: true
@@ -64,6 +91,8 @@ paths:
     get:
       description: Returns a project based on a single ID
       operationId: findProjectById
+      tags:
+        - Projects
       parameters:
         - name: projectId
           in: path
@@ -91,6 +120,8 @@ paths:
     put:
       description: Update a project based on a single ID - full or partial update
       operationId: updateProject
+      tags:
+        - Projects
       parameters:
         - name: projectId
           in: path
@@ -126,6 +157,8 @@ paths:
     delete:
       description: deletes a single project based on the ID supplied
       operationId: deleteProject
+      tags:
+        - Projects
       parameters:
         - name: projectId
           in: path
@@ -148,6 +181,8 @@ paths:
     get:
       description: Returns all documents that the user has access to for the given project id
       operationId: findDocuments
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -181,6 +216,8 @@ paths:
     post:
       description: Creates a new document
       operationId: addDocument
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -217,6 +254,8 @@ paths:
     get:
       description: Returns a document based on a single ID
       operationId: findDocumentById
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -255,6 +294,8 @@ paths:
     put:
       description: Update a document based on a single ID - full or partial update
       operationId: updateDocument
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -295,6 +336,8 @@ paths:
     delete:
       description: deletes a single document based on the ID supplied
       operationId: deleteDocument
+      tags:
+        - Documents
       parameters:
         - name: projectId
           in: path
@@ -324,6 +367,8 @@ paths:
       description: |
         Returns all project user assignments
       operationId: findProjectUsers
+      tags:
+        - Project User Assignments
       parameters:
         - name: projectId
           in: path
@@ -331,6 +376,11 @@ paths:
           required: true
           schema:
             type: integer
+        - name: includeUser
+          in: query
+          description: setting to true with include user objects in request
+          schema:
+            type: boolean
 
       responses:
         '200':
@@ -353,6 +403,8 @@ paths:
     post:
       description: Creates a new project user assignment
       operationId: addProjectUser
+      tags:
+        - Project User Assignments
       parameters:
         - name: projectId
           in: path
@@ -389,6 +441,8 @@ paths:
     get:
       description: Returns a project user assignment based on a single ID
       operationId: findProjectUserById
+      tags:
+        - Project User Assignments
       parameters:
         - name: projectId
           in: path
@@ -422,6 +476,8 @@ paths:
     put:
       description: Update a project user assignment based on a single ID
       operationId: updateProjectUser
+      tags:
+        - Project User Assignments
       parameters:
         - name: projectId
           in: path
@@ -462,6 +518,8 @@ paths:
     delete:
       description: deletes a single project user assignment based on the ID supplied
       operationId: deleteProjectUser
+      tags:
+        - Project User Assignments
       parameters:
         - name: projectId
           in: path
@@ -491,6 +549,8 @@ paths:
       description: |
         Returns all project tokens
       operationId: findProjectTokens
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -520,6 +580,8 @@ paths:
     post:
       description: Creates a new project token
       operationId: addProjectToken
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -556,6 +618,8 @@ paths:
     get:
       description: Returns a project token based on a single ID
       operationId: findProjectTokenById
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -589,6 +653,8 @@ paths:
     put:
       description: Update a project token based on a single ID
       operationId: updateProjectToken
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -629,6 +695,8 @@ paths:
     delete:
       description: deletes a single project token based on the ID supplied
       operationId: deleteProjectToken
+      tags:
+        - Project Tokens
       parameters:
         - name: projectId
           in: path
@@ -657,6 +725,8 @@ paths:
     get:
       description: Returns a document based on a single ID
       operationId: findPopulatedDocumentById
+      tags:
+        - Documents With Fields
       parameters:
         - name: documentId
           in: path
@@ -691,6 +761,8 @@ paths:
     post:
       description: Publishes a document based on ID
       operationId: publishDocument
+      tags:
+        - Document Publish
       parameters:
         - name: documentId
           in: path
@@ -713,6 +785,8 @@ paths:
     post:
       description: Unpublishes a document based on ID
       operationId: unpublishDocument
+      tags:
+        - Document Publish
       parameters:
         - name: documentId
           in: path
@@ -736,6 +810,8 @@ paths:
       description: |
         Returns all fields that the user has access to for the given project/document ids
       operationId: findFields
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -770,6 +846,8 @@ paths:
     post:
       description: Creates a new field
       operationId: addField
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -810,6 +888,8 @@ paths:
     get:
       description: Returns a field based on a single ID
       operationId: findFieldById
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -843,6 +923,8 @@ paths:
     put:
       description: Update a field based on a single ID - full or partial update
       operationId: updateField
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -887,6 +969,8 @@ paths:
     delete:
       description: deletes a single field based on the ID supplied
       operationId: deleteField
+      tags:
+        - Fields
       parameters:
         - name: documentId
           in: path
@@ -915,6 +999,8 @@ paths:
     put:
       description: Update field order based on a field ID
       operationId: updateFieldOrder
+      tags:
+        - Field Order
       parameters:
         - name: documentId
           in: path
@@ -950,6 +1036,8 @@ paths:
     get:
       description: Returns an organization based on a single ID
       operationId: findOrganizationById
+      tags:
+        - Organizations
       parameters:
         - name: organizationId
           in: path
@@ -977,6 +1065,8 @@ paths:
     put:
       description: Update an organization based on a single ID
       operationId: updateOrganization
+      tags:
+        - Organizations
       parameters:
         - name: organizationId
           in: path
@@ -1012,6 +1102,8 @@ paths:
     put:
       description: Update an organizations avatar based on a single ID
       operationId: updateOrganizationAvatar
+      tags:
+        - Organizations
       parameters:
         - name: organizationId
           in: path
@@ -1047,6 +1139,8 @@ paths:
     get:
       description: Get an organizations billing based on a single ID
       operationId: getOrganizationBilling
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1074,6 +1168,8 @@ paths:
     put:
       description: Update an organizations billing based on a single ID
       operationId: updateOrganizationBilling
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1109,6 +1205,8 @@ paths:
     post:
       description: initiates subscription cancellation for organization
       operationId: cancelOrganizationSubscription
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1131,6 +1229,8 @@ paths:
      put:
       description: Update an organizations subscription plan based on a single ID
       operationId: updateOrganizationPlan
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1159,6 +1259,8 @@ paths:
     get:
       description: Get organization seat data
       operationId: getOrganizationSeats
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1182,6 +1284,8 @@ paths:
     put:
       description: Update the total seats on an organization, only applies to organizations subscribed to a multi user plan
       operationId: updateOrganizationSeats
+      tags:
+        - Billing
       parameters:
         - name: organizationId
           in: path
@@ -1214,6 +1318,8 @@ paths:
     get:
       description: Returns all users that the user has access to
       operationId: findUsers
+      tags:
+        - Users
       parameters:
         - name: page
           in: query
@@ -1260,6 +1366,8 @@ paths:
     post:
       description: Creates a new user
       operationId: addUser
+      tags:
+        - Users
       requestBody:
         description: User to add
         required: true
@@ -1287,6 +1395,8 @@ paths:
     get:
       description: Returns a user based on a single ID
       operationId: findUserById
+      tags:
+        - Users
       parameters:
         - name: userId
           in: path
@@ -1314,6 +1424,8 @@ paths:
     put:
       description: Update a user based on a single ID - full or partial update
       operationId: updateUser
+      tags:
+        - Users
       parameters:
         - name: userId
           in: path
@@ -1349,6 +1461,8 @@ paths:
     delete:
       description: deletes a single user based on the ID supplied
       operationId: deleteUser
+      tags:
+        - Users
       parameters:
         - name: userId
           in: path
@@ -1371,6 +1485,8 @@ paths:
     put:
       description: Update a user's organization role based on a single ID
       operationId: updateUserOrgRole
+      tags:
+        - User Role
       parameters:
         - name: userId
           in: path
@@ -1399,6 +1515,8 @@ paths:
     get:
       description: Returns user assignments based on user id
       operationId: findUserAssignmentsById
+      tags:
+        - User Project Assignments
       parameters:
         - name: userId
           in: path
@@ -1429,6 +1547,8 @@ paths:
     get:
       description: Returns projects based on user id
       operationId: findUserProjectsById
+      tags:
+        - User Projects
       parameters:
         - name: userId
           in: path
