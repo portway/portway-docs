@@ -11,7 +11,6 @@ COPY package*.json ./
 RUN npm install --only=production
 
 COPY index.js ./
-COPY output/ ./output/
-COPY static_pages/ ./static_pages/
+COPY build/ ./build/
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]

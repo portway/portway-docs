@@ -1,21 +1,29 @@
-const express = require('express')
+const Fastify = require('fastify')
+const fs = require('fs')
+const path = require('path')
 
-const PORT = 3003
-const app = express()
-
-app.use('/api', express.static('output', { index: ['api.html'] }))
-
-// This is temporarily sending the api docs page because
-// we need this app to respond to the base path in order
-// to get letsencrypt to issue a cert
-app.get('/', (req, res) => {
-  res.status(200).sendFile("./output/api.html", { root: __dirname });
+// https is necessary otherwise browsers will not
+// be able to connect
+const fastify = Fastify({
+  // http2: true,
+  // @todo hook this up with certs
+  //  https: {
+  //    key: getKeySomehow(),
+  //    cert: getCertSomehow()
+  //  },
+  logger: true
 })
 
-app.use((req, res) => {
-  res.status(404).sendFile('./static_pages/404.html', {root: __dirname})
+fastify.register(require('fastify-static'), {
+  root: path.join(__dirname, 'build'),
 })
 
-app.listen(PORT, () => {
-  console.log(`Portway docs running on ${PORT}`);
-});
+fastify.get('/', async (request, reply) => {
+  const stream = fs.createReadStream('./build/index.html')
+  reply.type('text/html').send(stream)
+})
+
+fastify.listen(3000, (err, address) => {
+  if (err) throw err
+  fastify.log.info(`server listening on ${address}`)
+})
