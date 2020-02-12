@@ -1,0 +1,60 @@
+:root {
+  --type-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --type-serif: Domine, Georgia, serif;
+}
+
+body {
+  font-weight: 300;
+  color: #333;
+}
+
+.centered {
+  text-align: center;
+}
+
+h1, h2 {
+  font-family: var(--type-serif);
+}
+
+h3, h4, h5, h6 {
+  font-family: var(--type-sans-serif);
+}
+
+h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  line-height: 4.4rem;
+  margin: 0 0 1.2rem;
+}
+
+h3 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  line-height: 2.7rem;
+  margin: 0 0 1.3rem;
+  &.normal {
+    font-weight: 300;
+  }
+}
+
+h4 {
+  font-size: 1.7rem;
+  font-weight: normal;
+  letter-spacing: -0.3px;
+  line-height: 2.7rem;
+  margin: 0 0 1.3rem;
+}
+
+p, div, li, footer {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  line-height: 2.4rem;
+}
+
+p {
+  margin: 0 0 1.2rem;
+}
+
