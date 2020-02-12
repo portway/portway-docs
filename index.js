@@ -23,7 +23,7 @@ fastify.get('/', async (request, reply) => {
   reply.type('text/html').send(stream)
 })
 
-fastify.listen(3000, '0.0.0.0', (err, address) => {
+fastify.listen(3003, '0.0.0.0', (err, address) => {
   if (err) throw err
   fastify.log.info(`server listening on ${address}`)
 })
