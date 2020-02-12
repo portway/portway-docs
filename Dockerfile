@@ -8,10 +8,18 @@ WORKDIR /portway_docs
 # Only copy package.json first to take advantage of docker caching
 COPY package*.json ./
 
+RUN npm install
+
+COPY . .
+
+RUN npm run generate-docs
+RUN npm run build
+
+RUN rm -rf node_modules/
+RUN rm -rf src/
+RUN rm -rf public/
+
+ENV NODE_ENV production
 RUN npm install --only=production
 
-COPY index.js ./
-COPY output/ ./output/
-COPY static_pages/ ./static_pages/
-
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
