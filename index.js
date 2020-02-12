@@ -16,11 +16,11 @@ const fastify = Fastify({
 
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, 'build'),
+  wildcard: true,
 })
 
-fastify.get('/', async (request, reply) => {
-  const stream = fs.createReadStream('./build/index.html')
-  reply.type('text/html').send(stream)
+fastify.setNotFoundHandler((req, res) => {
+  res.sendFile('index.html')
 })
 
 fastify.listen(3000, '0.0.0.0', (err, address) => {

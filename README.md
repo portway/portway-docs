@@ -8,9 +8,9 @@ See [Deploying Portway Docs](https://portway.app/d/project/3/document/5)
 
 ## Scripts
 
-`npm start` - Builds the production React application, processes the API docs, and starts the Fastify server
 `npm run dev` – Runs the CRA webpack-dev-server for local development. This loads the previously built API spec
 `npm run build` – Builds the production React app
+`npm start` - Starts the Fastify server
 `npm run generate-docs` – Builds the API spec
 
 ## Building Docker image
