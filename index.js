@@ -1,5 +1,4 @@
 const Fastify = require('fastify')
-const fs = require('fs')
 const path = require('path')
 
 // https is necessary otherwise browsers will not
@@ -16,11 +15,11 @@ const fastify = Fastify({
 
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, 'build'),
+  wildcard: true,
 })
 
-fastify.get('/', async (request, reply) => {
-  const stream = fs.createReadStream('./build/index.html')
-  reply.type('text/html').send(stream)
+fastify.setNotFoundHandler((req, res) => {
+  res.sendFile('index.html')
 })
 
 fastify.listen(3003, '0.0.0.0', (err, address) => {

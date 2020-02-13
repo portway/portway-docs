@@ -1,0 +1,55 @@
+body {
+  background: var(--theme-surface);
+}
+
+form {
+  label, .label {
+    display: block;
+    font-family: var(--type-sans-serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    line-height: 2rem;
+    margin-bottom: 1.2rem;
+
+    &--inline {
+      align-items: center;
+      display: flex;
+    }
+
+  }
+  input, textarea {
+    background-color: #fff;
+    border: thin solid var(--color-gray-10);
+    border-radius: 3px 3px;
+    font-family: var(--type-sans-serif);
+    font-size: 1.5rem;
+    letter-spacing: -0.2px;
+    line-height: 2.4rem;
+    padding: 6px 6px;
+    width: 100%;
+    ::placeholder {
+      color: var(--color-gray-40);
+    }
+  }
+  input[type="text"], input[type="email"], textarea {
+    appearance: none;
+  }
+  input[type="checkbox"], input[type="radio"] {
+    margin: 0 1rem 0 0;
+    padding: 0;
+    width: auto;
+  }
+  button, .btn {
+    font-size: 1.7rem;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    line-height: 2.7rem;
+    margin-top: 1.5rem;
+
+    &--full {
+      width: 100%;
+    }
+
+  }
+}
