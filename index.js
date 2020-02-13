@@ -1,5 +1,4 @@
 const Fastify = require('fastify')
-const fs = require('fs')
 const path = require('path')
 
 // https is necessary otherwise browsers will not

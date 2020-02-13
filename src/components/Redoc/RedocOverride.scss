@@ -1,0 +1,10 @@
+.redoc-wrap {
+  .menu-content {
+    label[type="tag"] {
+      color: var(--theme-header-color);
+    }
+    label[role="menuitem"] {
+      align-items: center;
+    }
+  }
+}

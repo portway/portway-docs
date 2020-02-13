@@ -1,6 +1,8 @@
 import React from 'react'
 import { RedocStandalone } from 'redoc'
 
+import './RedocOverride.scss'
+
 const Redoc = () => {
   const redocOptions = {
     disableSearch: true,
@@ -54,8 +56,7 @@ const Redoc = () => {
       letterSpacing: '-0.2px',
       lineHeight: '2.7rem',
       headings: {
-        fontFamily: 'Domine, Georgia, serif',
-        fontWeight: 700,
+        fontWeight: 400,
         lineHeight: '3.4em',
       }
     },
