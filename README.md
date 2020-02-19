@@ -8,17 +8,22 @@ See [Deploying Portway Docs](https://portway.app/d/project/3/document/5)
 
 ## Scripts
 
-`npm run dev` – Runs the CRA webpack-dev-server for local development. This loads the previously built API spec
-`npm run build` – Builds the production React app
-`npm start` - Starts the Fastify server
-`npm run generate-docs` – Builds the API spec
+`npm run dev` – Runs the CRA webpack-dev-server for local development. This loads the previously built API spec<br />
+`npm run build` – Builds the production React app<br />
+`npm start` - Starts the Fastify server<br />
+`npm run generate-docs` – Builds the API spec<br />
 
 ## Building Docker image
-`docker build -t bonkeybong/portway_docs .`
+  ```bash
+  docker build -t bonkeybong/portway_docs .
+  ```
 
 ## Linting
 
-Run `npx speccy lint public/docs/openapi.yml`
+Run
+  ```bash
+  npx speccy lint public/docs/openapi.yml
+  ```
 
 ---
 
