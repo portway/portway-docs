@@ -74,7 +74,7 @@ const Redoc = () => {
         ...redocOptions,
         theme: theme
       }}
-      specUrl={`${process.env.PUBLIC_URL}/docs/openapi.yml`}
+      specUrl={`${process.env.PUBLIC_URL}/spec/openapi.yml`}
     />
   )
 }
