@@ -1,4 +1,5 @@
 Document:
+  type: object
   allOf:
     - $ref: '#/NewDocument'
     - required:
