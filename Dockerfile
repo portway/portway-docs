@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run generate-docs
+RUN npm run generate-spec
 RUN npm run build
 
 RUN rm -rf node_modules/
