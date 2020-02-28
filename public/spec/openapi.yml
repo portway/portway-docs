@@ -1,4 +1,4 @@
-openapi: '3.0.2'
+openapi: 3.0.2
 info:
   version: 1.0.0
   title: Portway API
@@ -6,26 +6,42 @@ info:
     name: Portway Team
     email: feedback@bonkeybong.com
     url: https://getportway.com
-  description: |
+  description: >
     The Portway API.
 
+
     # Introduction
+
     You are viewing a beta version of the Portway API spec. If you have any feedback or questions,
+
     please [contact us](mailto:feedback@bonkeybong.com).
 
+
     # Authentication
-    The Portway API has one form of authentication, API key.
+
+    The Portway API authenticates via bearer tokens in the Authorization header
+
+
+    **Example:**
+
+    ```bash
+
+    curl -H "Authorization: Bearer <TOKEN>" https://api.dev.portway.app/api/v1/projects
+
+    ```
 servers:
-  - url: https://api.portway.app
+  - url: https://api.portway.app/api/v1
 tags:
   - name: Projects
     description: Organization projects.
   - name: Documents
     description: Documents for a given project.
   - name: Fields
-    description: Published or Unpublished fields. Use draft=true query param on GET requests to fetch unpublished fields.
+    description: Published or Unpublished fields. Use draft=true query param on GET
+      requests to fetch unpublished fields.
   - name: Project Assignments
-    description: Project assignments. Use includeUser=true query param on GET requests to include full user objects.
+    description: Project assignments. Use includeUser=true query param on GET requests to
+      include full user objects.
   - name: Project Tokens
     description: Project API access tokens
   - name: Organizations
@@ -36,10 +52,18 @@ tags:
     description: Portway users in your organization
   - name: User Assignments
     description: Project assignments for a specific user
-  - name: document_model
-    x-displayName: Document Model
+  - name: project_model
+    x-displayName: Project
     description: |
-      <SchemaDefinition schemaRef="./definitions/document.yml#/Document" />
+      <SchemaDefinition schemaRef="#/components/schemas/Project" />
+  - name: document_model
+    x-displayName: Document
+    description: |
+      <SchemaDefinition schemaRef="#/components/schemas/Document" />
+  - name: field_model
+    x-displayName: Field
+    description: |
+      <SchemaDefinition schemaRef="#/components/schemas/Field" />
 x-tagGroups:
   - name: Projects
     tags:
@@ -56,7 +80,9 @@ x-tagGroups:
       - User Assignments
   - name: Models
     tags:
-      - document_ model
+      - project_model
+      - document_model
+      - field_model
 paths:
   /projects:
     get:
@@ -66,7 +92,7 @@ paths:
       tags:
         - Projects
       responses:
-        '200':
+        "200":
           description: projects response
           content:
             application/json:
@@ -76,14 +102,36 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: 'definitions/project.yml#/Project'
-
+                      allOf:
+                        - required:
+                            - name
+                          properties:
+                            name:
+                              type: string
+                            description:
+                              type: string
+                            accessLevel:
+                              type: string
+                              enum:
+                                - read
+                                - write
+                        - required:
+                            - id
+                        - properties:
+                            id:
+                              type: integer
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     post:
       description: Creates a new project
       operationId: addProject
@@ -95,9 +143,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './definitions/project.yml#/NewProject'
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                accessLevel:
+                  type: string
+                  enum:
+                    - read
+                    - write
       responses:
-        '201':
+        "201":
           description: project response
           content:
             application/json:
@@ -105,14 +164,14 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/project.yml#/Project'
+                    $ref: "#/components/schemas/Project"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-  /projects/{projectId}:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}":
     get:
       description: Returns a project based on a single ID
       operationId: findProjectById
@@ -125,9 +184,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: project response
           content:
             application/json:
@@ -135,13 +193,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/project.yml#/Project'
+                    $ref: "#/components/schemas/Project"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       description: Update a project based on a single ID - full or partial update
       operationId: updateProject
@@ -154,16 +212,24 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: Project body to update - allows partial field update
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/project.yml#/UpdateProject'
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                accessLevel:
+                  type: string
+                  enum:
+                    - read
+                    - write
       responses:
-        '200':
+        "200":
           description: project response
           content:
             application/json:
@@ -171,14 +237,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/project.yml#/Project'
+                    $ref: "#/components/schemas/Project"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
+                $ref: "#/components/schemas/Error"
     delete:
       description: deletes a single project based on the ID supplied
       operationId: deleteProject
@@ -191,21 +256,20 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: project deleted
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /projects/{projectId}/documents:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/documents":
     get:
-      description: Returns all documents that the user has access to for the given project id
-      operationId: findDocuments
+      description: Returns all documents that the user has access to for the given project
+        id
+      operationId: findProjectDocuments
       tags:
         - Documents
       parameters:
@@ -221,7 +285,7 @@ paths:
           schema:
             type: boolean
       responses:
-        '200':
+        "200":
           description: documents response
           content:
             application/json:
@@ -231,16 +295,16 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: './definitions/document.yml#/Document'
+                      $ref: "#/components/schemas/Document"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     post:
       description: Creates a new document
-      operationId: addDocument
+      operationId: addProjectDocument
       tags:
         - Documents
       parameters:
@@ -250,16 +314,19 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: document to add
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/document.yml#/NewDocument'
+              required:
+                - name
+              properties:
+                name:
+                  type: string
       responses:
-        '201':
+        "201":
           description: document response
           content:
             application/json:
@@ -267,18 +334,17 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/document.yml#/Document'
+                    $ref: "#/components/schemas/Document"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /projects/{projectId}/documents/{documentId}:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/documents/{documentId}":
     get:
       description: Returns a document based on a single ID
-      operationId: findDocumentById
+      operationId: findProjectDocumentById
       tags:
         - Documents
       parameters:
@@ -299,9 +365,8 @@ paths:
           description: option to include draft documents
           schema:
             type: boolean
-
       responses:
-        '200':
+        "200":
           description: document response
           content:
             application/json:
@@ -309,13 +374,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/document.yml#/Document'
+                    $ref: "#/components/schemas/Document"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       description: Update a document based on a single ID - full or partial update
       operationId: updateDocument
@@ -334,16 +399,17 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: Document body to update - allows partial field update
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/document.yml#/UpdateDocument'
+              properties:
+                name:
+                  type: string
       responses:
-        '200':
+        "200":
           description: document response
           content:
             application/json:
@@ -351,13 +417,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/document.yml#/Document'
+                    $ref: "#/components/schemas/Document"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     delete:
       description: deletes a single document based on the ID supplied
       operationId: deleteDocument
@@ -376,18 +442,16 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: document deleted
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /projects/{projectId}/assignments:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/assignments":
     get:
       description: |
         Returns all project user assignments
@@ -406,9 +470,8 @@ paths:
           description: setting to true with include user objects in request
           schema:
             type: boolean
-
       responses:
-        '200':
+        "200":
           description: project user assignments response
           content:
             application/json:
@@ -418,13 +481,34 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: './definitions/projectUser.yml#/ProjectUser'
+                      allOf:
+                        - required:
+                            - roleId
+                            - userId
+                          properties:
+                            roleId:
+                              type: number
+                            userId:
+                              type: number
+                        - required:
+                            - id
+                        - properties:
+                            projectId:
+                              type: integer
+                            id:
+                              type: integer
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     post:
       description: Creates a new project user assignment
       operationId: addProjectUser
@@ -437,16 +521,22 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: project user to add
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/projectUser.yml#/NewProjectUser'
+              required:
+                - roleId
+                - userId
+              properties:
+                roleId:
+                  type: number
+                userId:
+                  type: number
       responses:
-        '201':
+        "201":
           description: project user assignment response
           content:
             application/json:
@@ -454,15 +544,16 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/projectUser.yml#/ProjectUser'
+                    $ref: "#/paths/~1projects~1%7BprojectId%7D~1assignments/get/res\
+                      ponses/200/content/application~1json/schema/properties/da\
+                      ta/items"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /projects/{projectId}/assignments/{assignmentId}:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/assignments/{assignmentId}":
     get:
       description: Returns a project user assignment based on a single ID
       operationId: findProjectUserById
@@ -481,9 +572,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: project user assignment response
           content:
             application/json:
@@ -491,13 +581,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/projectUser.yml#/ProjectUser'
+                    $ref: "#/paths/~1projects~1%7BprojectId%7D~1assignments/get/res\
+                      ponses/200/content/application~1json/schema/properties/da\
+                      ta/items"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       description: Update a project user assignment based on a single ID
       operationId: updateProjectUser
@@ -516,16 +608,19 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: Project User assignment body to update
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/projectUser.yml#/UpdateProjectUser'
+              required:
+                - roleId
+              properties:
+                roleId:
+                  type: number
       responses:
-        '200':
+        "200":
           description: project user assignment response
           content:
             application/json:
@@ -533,13 +628,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/projectUser.yml#/ProjectUser'
+                    $ref: "#/paths/~1projects~1%7BprojectId%7D~1assignments/get/res\
+                      ponses/200/content/application~1json/schema/properties/da\
+                      ta/items"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     delete:
       description: deletes a single project user assignment based on the ID supplied
       operationId: deleteProjectUser
@@ -558,18 +655,16 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: project user assignment deleted
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /projects/{projectId}/tokens:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/tokens":
     get:
       description: |
         Returns all project tokens
@@ -583,9 +678,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: project tokens response
           content:
             application/json:
@@ -595,13 +689,36 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: './definitions/projectToken.yml#/ProjectToken'
+                      allOf:
+                        - required:
+                            - roleId
+                            - name
+                          properties:
+                            roleId:
+                              type: number
+                            name:
+                              type: string
+                        - required:
+                            - id
+                        - properties:
+                            id:
+                              type: integer
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time
+                            projectId:
+                              type: integer
+                            token:
+                              type: string
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     post:
       description: Creates a new project token
       operationId: addProjectToken
@@ -614,16 +731,22 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: project token to add
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/projectToken.yml#/NewProjectToken'
+              required:
+                - roleId
+                - name
+              properties:
+                roleId:
+                  type: number
+                name:
+                  type: string
       responses:
-        '201':
+        "201":
           description: project token response
           content:
             application/json:
@@ -631,15 +754,16 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/projectToken.yml#/ProjectToken'
+                    $ref: "#/paths/~1projects~1%7BprojectId%7D~1tokens/get/response\
+                      s/200/content/application~1json/schema/properties/data/it\
+                      ems"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /projects/{projectId}/tokens/{tokenId}:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/tokens/{tokenId}":
     get:
       description: Returns a project token based on a single ID
       operationId: findProjectTokenById
@@ -658,9 +782,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: project token response
           content:
             application/json:
@@ -668,13 +791,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/projectToken.yml#/ProjectToken'
+                    $ref: "#/paths/~1projects~1%7BprojectId%7D~1tokens/get/response\
+                      s/200/content/application~1json/schema/properties/data/it\
+                      ems"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       description: Update a project token based on a single ID
       operationId: updateProjectToken
@@ -693,16 +818,17 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: Project token body to update
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/projectToken.yml#/UpdateProjectToken'
+              properties:
+                name:
+                  type: string
       responses:
-        '200':
+        "200":
           description: project token response
           content:
             application/json:
@@ -710,13 +836,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/projectToken.yml#/ProjectToken'
+                    $ref: "#/paths/~1projects~1%7BprojectId%7D~1tokens/get/response\
+                      s/200/content/application~1json/schema/properties/data/it\
+                      ems"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     delete:
       description: deletes a single project token based on the ID supplied
       operationId: deleteProjectToken
@@ -735,23 +863,22 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: project token deleted
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /documents/{documentId}:
+                $ref: "#/components/schemas/Error"
+  "/documents/{documentId}":
     get:
-      description: Returns a document based on a single ID
+      description: Returns a document based on a single ID with all document fields
+        populated
       operationId: findPopulatedDocumentById
       tags:
-        - Fields
+        - Documents
       parameters:
         - name: documentId
           in: path
@@ -764,9 +891,8 @@ paths:
           description: option to include draft documents
           schema:
             type: boolean
-
       responses:
-        '200':
+        "200":
           description: document response
           content:
             application/json:
@@ -774,15 +900,128 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/document.yml#/PopulatedDocument'
+                    allOf:
+                      - type: object
+                        allOf:
+                          - required:
+                              - name
+                            properties:
+                              name:
+                                type: string
+                          - required:
+                              - id
+                              - projectId
+                          - properties:
+                              id:
+                                type: integer
+                              projectId:
+                                type: integer
+                              publishedVersionId:
+                                type: integer
+                              lastPublishedAt:
+                                type: string
+                                format: date-time
+                              createdAt:
+                                type: string
+                                format: date-time
+                              updatedAt:
+                                type: string
+                                format: date-time
+                      - properties:
+                          fields:
+                            type: array
+                            items:
+                              allOf:
+                                - oneOf:
+                                    - title: String
+                                      required:
+                                        - name
+                                        - type
+                                      properties:
+                                        name:
+                                          type: string
+                                        type:
+                                          type: integer
+                                          enum:
+                                            - 1
+                                        value:
+                                          type: string
+                                    - title: Text
+                                      required:
+                                        - name
+                                        - type
+                                      properties:
+                                        name:
+                                          type: string
+                                        type:
+                                          type: integer
+                                          enum:
+                                            - 2
+                                        value:
+                                          type: string
+                                        structuredValue:
+                                          type: string
+                                    - title: Number
+                                      required:
+                                        - name
+                                        - type
+                                      properties:
+                                        name:
+                                          type: string
+                                        type:
+                                          type: integer
+                                          enum:
+                                            - 3
+                                        value:
+                                          type: number
+                                          format: double
+                                          description: Number value with maximum of 15
+                                            significant digits (including
+                                            decimal digits). For longer numbers
+                                            we recommend storing as a string and
+                                            parsing the value in your code.
+                                    - title: Image
+                                      required:
+                                        - name
+                                        - type
+                                      properties:
+                                        name:
+                                          type: string
+                                        type:
+                                          type: integer
+                                          enum:
+                                            - 4
+                                        value:
+                                          type: string
+                                          description: Url of uploaded image
+                                          example: https://www.google.com/test-image
+                                - required:
+                                    - id
+                                    - name
+                                    - documentId
+                                    - type
+                                - properties:
+                                    id:
+                                      type: integer
+                                    name:
+                                      type: string
+                                    documentId:
+                                      type: integer
+                                    type:
+                                      type: integer
+                                    createdAt:
+                                      type: string
+                                      format: date-time
+                                    updatedAt:
+                                      type: string
+                                      format: date-time
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /documents/{documentId}/publish:
+                $ref: "#/components/schemas/Error"
+  "/documents/{documentId}/publish":
     post:
       description: Publishes a document based on ID
       operationId: publishDocument
@@ -795,18 +1034,16 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: document published
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /documents/{documentId}/unpublish:
+                $ref: "#/components/schemas/Error"
+  "/documents/{documentId}/unpublish":
     post:
       description: Unpublishes a document based on ID
       operationId: unpublishDocument
@@ -819,21 +1056,20 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: document unpublished
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /documents/{documentId}/fields:
+                $ref: "#/components/schemas/Error"
+  "/documents/{documentId}/fields":
     get:
-      description: |
-        Returns all fields that the user has access to for the given project/document ids
+      description: >
+        Returns all fields that the user has access to for the given
+        project/document ids
       operationId: findFields
       tags:
         - Fields
@@ -849,9 +1085,8 @@ paths:
           description: option to include draft documents
           schema:
             type: boolean
-
       responses:
-        '200':
+        "200":
           description: fields response
           content:
             application/json:
@@ -861,13 +1096,13 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: './definitions/field.yml#/Field'
+                      $ref: "#/components/schemas/Field"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     post:
       description: Creates a new field
       operationId: addField
@@ -880,20 +1115,80 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: field to add
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/field.yml#/NewField'
+              oneOf:
+                - title: String
+                  required:
+                    - name
+                    - type
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: integer
+                      enum:
+                        - 1
+                    value:
+                      type: string
+                - title: Text
+                  required:
+                    - name
+                    - type
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: integer
+                      enum:
+                        - 2
+                    value:
+                      type: string
+                    structuredValue:
+                      type: string
+                - title: Number
+                  required:
+                    - name
+                    - type
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: integer
+                      enum:
+                        - 3
+                    value:
+                      type: number
+                      format: double
+                      description: Number value with maximum of 15 significant digits
+                        (including decimal digits). For longer numbers we
+                        recommend storing as a string and parsing the value in
+                        your code.
+                - title: Image
+                  required:
+                    - name
+                    - type
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: integer
+                      enum:
+                        - 4
+                    value:
+                      type: string
+                      description: Url of uploaded image
+                      example: https://www.google.com/test-image
             example:
               name: field name
               value: 808
               type: 3
       responses:
-        '201':
+        "201":
           description: field response
           content:
             application/json:
@@ -901,15 +1196,14 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/field.yml#/Field'
+                    $ref: "#/components/schemas/Field"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /documents/{documentId}/fields/{fieldId}:
+                $ref: "#/components/schemas/Error"
+  "/documents/{documentId}/fields/{fieldId}":
     get:
       description: Returns a field based on a single ID
       operationId: findFieldById
@@ -928,9 +1222,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: field response
           content:
             application/json:
@@ -938,13 +1231,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/field.yml#/Field'
+                    $ref: "#/components/schemas/Field"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       description: Update a field based on a single ID - full or partial update
       operationId: updateField
@@ -963,19 +1256,24 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: Field body to update - allows partial field update
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/field.yml#/UpdateField'
+              properties:
+                name:
+                  type: string
+                value:
+                  oneOf:
+                    - type: string
+                    - type: number
             example:
-              name: 'new name'
-              value: 'new value'
+              name: new name
+              value: new value
       responses:
-        '200':
+        "200":
           description: field response
           content:
             application/json:
@@ -983,14 +1281,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/field.yml#/Field'
+                    $ref: "#/components/schemas/Field"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
+                $ref: "#/components/schemas/Error"
     delete:
       description: deletes a single field based on the ID supplied
       operationId: deleteField
@@ -1009,18 +1306,16 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: field deleted
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /documents/{documentId}/fields/{fieldId}/order:
+                $ref: "#/components/schemas/Error"
+  "/documents/{documentId}/fields/{fieldId}/order":
     put:
       description: Update field order based on a field ID
       operationId: updateFieldOrder
@@ -1039,25 +1334,25 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: Field body to update - allows partial field update
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/field.yml#/FieldOrder'
+              properties:
+                order:
+                  type: integer
       responses:
-        '204':
+        "204":
           description: field order updated
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /organizations/{organizationId}:
+                $ref: "#/components/schemas/Error"
+  "/organizations/{organizationId}":
     get:
       x-internal: true
       description: Returns an organization based on a single ID
@@ -1071,9 +1366,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: organization response
           content:
             application/json:
@@ -1081,13 +1375,33 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/organization.yml#/Organization'
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      allowUserProjectCreation:
+                        type: boolean
+                      avatar:
+                        type: string
+                      plan:
+                        type: string
+                      subscriptionStatus:
+                        type: string
+                      canceledAt:
+                        type: integer
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       x-internal: true
       description: Update an organization based on a single ID
@@ -1107,9 +1421,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './definitions/organization.yml#/UpdateOrganization'
+              properties:
+                name:
+                  type: string
+                allowUserProjectCreation:
+                  type: boolean
       responses:
-        '200':
+        "200":
           description: organization response
           content:
             application/json:
@@ -1117,15 +1435,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/organization.yml#/Organization'
+                    $ref: "#/paths/~1organizations~1%7BorganizationId%7D/get/respon\
+                      ses/200/content/application~1json/schema/properties/data"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /organizations/{organizationId}/avatar:
+                $ref: "#/components/schemas/Error"
+  "/organizations/{organizationId}/avatar":
     put:
       x-internal: true
       description: Update an organizations avatar based on a single ID
@@ -1145,9 +1463,12 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: './definitions/organization.yml#/UpdateOrganizationAvatar'
+              properties:
+                file:
+                  type: string
+                  format: binary
       responses:
-        '200':
+        "200":
           description: organization avatar response with avatar url
           content:
             application/json:
@@ -1155,15 +1476,16 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/organization.yml#/OrganizationAvatar'
+                    properties:
+                      avatar:
+                        type: string
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /organizations/{organizationId}/billing:
+                $ref: "#/components/schemas/Error"
+  "/organizations/{organizationId}/billing":
     get:
       x-internal: true
       description: Get an organizations billing based on a single ID
@@ -1178,7 +1500,7 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: organization billing response
           content:
             application/json:
@@ -1186,14 +1508,67 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/organization.yml#/OrganizationBilling'
+                    properties:
+                      currency:
+                        type: string
+                      name:
+                        type: string
+                      balance:
+                        type: integer
+                      source:
+                        type: object
+                        properties:
+                          addressCity:
+                            type: string
+                          addressLine1:
+                            type: string
+                          addressLine2:
+                            type: string
+                          addressState:
+                            type: string
+                          addressZip:
+                            type: string
+                          brand:
+                            type: string
+                          expMonth:
+                            type: integer
+                          expYear:
+                            type: integer
+                          last4:
+                            type: string
+                          name:
+                            type: string
+                      subscription:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                          planId:
+                            type: string
+                          billingCycleAnchor:
+                            type: integer
+                          cancelAt:
+                            type: integer
+                          currentPeriodEnd:
+                            type: integer
+                          trialEnd:
+                            type: integer
+                          totalSeats:
+                            type: integer
+                          usedSeats:
+                            type: integer
+                          flatCost:
+                            type: integer
+                          includedSeats:
+                            type: integer
+                          additionalSeatCost:
+                            type: integer
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
+                $ref: "#/components/schemas/Error"
     put:
       x-internal: true
       description: Update an organizations billing based on a single ID
@@ -1213,9 +1588,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './definitions/organization.yml#/UpdateOrganizationBilling'
+              properties:
+                token:
+                  type: string
       responses:
-        '200':
+        "200":
           description: organization billing response
           content:
             application/json:
@@ -1223,15 +1600,16 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/organization.yml#/OrganizationBilling'
+                    $ref: "#/paths/~1organizations~1%7BorganizationId%7D~1billing/g\
+                      et/responses/200/content/application~1json/schema/propert\
+                      ies/data"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /organizations/{organizationId}/billing/cancel:
+                $ref: "#/components/schemas/Error"
+  "/organizations/{organizationId}/billing/cancel":
     post:
       x-internal: true
       description: initiates subscription cancellation for organization
@@ -1245,19 +1623,17 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: subscription cancellation initiated
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /organizations/{organizationId}/plan:
-     put:
+                $ref: "#/components/schemas/Error"
+  "/organizations/{organizationId}/plan":
+    put:
       x-internal: true
       description: Update an organizations subscription plan based on a single ID
       operationId: updateOrganizationPlan
@@ -1276,18 +1652,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './definitions/organization.yml#/UpdateOrganizationPlan'
+              properties:
+                plan:
+                  type: string
+                  enum:
+                    - SINGLE_USER
+                    - MULTI_USER
       responses:
-        '204':
+        "204":
           description: organization plan update response
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /organizations/{organizationId}/seats:
+                $ref: "#/components/schemas/Error"
+  "/organizations/{organizationId}/seats":
     get:
       x-internal: true
       description: Get organization seat data
@@ -1302,21 +1682,28 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: organization seat data
           content:
             application/json:
               schema:
-                $ref: './definitions/organization.yml#/OrganizationSeats'
+                properties:
+                  usedSeats:
+                    type: integer
+                  totalSeats:
+                    type: integer
+                  includedSeats:
+                    type: integer
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       x-internal: true
-      description: Update the total seats on an organization, only applies to organizations subscribed to a multi user plan
+      description: Update the total seats on an organization, only applies to organizations
+        subscribed to a multi user plan
       operationId: updateOrganizationSeats
       tags:
         - Billing
@@ -1333,21 +1720,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './definitions/organization.yml#/UpdateOrganizationSeats'
+              properties:
+                seats:
+                  type: integer
+                  minimum: 5
+                  exclusiveMinimum: true
       responses:
-        '200':
+        "200":
           description: organization seat update response
           content:
             application/json:
               schema:
-                $ref: './definitions/organization.yml#/UpdateOrganizationSeatsResponse'
+                properties:
+                  totalSeats:
+                    type: integer
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
+                $ref: "#/components/schemas/Error"
   /users:
     get:
       description: Returns all users that the user has access to
@@ -1365,9 +1757,8 @@ paths:
           description: number of users to return per page
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: users response
           content:
             application/json:
@@ -1377,7 +1768,32 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: 'definitions/user.yml#/User'
+                      allOf:
+                        - required:
+                            - name
+                            - email
+                          properties:
+                            name:
+                              type: string
+                            email:
+                              type: string
+                        - required:
+                            - id
+                        - properties:
+                            avatar:
+                              type: string
+                            pending:
+                              type: boolean
+                            orgRoleId:
+                              type: integer
+                            id:
+                              type: integer
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time
                   page:
                     type: integer
                     example: 1
@@ -1390,13 +1806,12 @@ paths:
                   totalPages:
                     type: integer
                     example: 1
-
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     post:
       description: Creates a new user
       operationId: addUser
@@ -1408,9 +1823,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './definitions/user.yml#/NewUser'
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
       responses:
-        '201':
+        "201":
           description: user response
           content:
             application/json:
@@ -1418,14 +1840,39 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/user.yml#/User'
+                    allOf:
+                      - required:
+                          - name
+                          - email
+                        properties:
+                          name:
+                            type: string
+                          email:
+                            type: string
+                      - required:
+                          - id
+                      - properties:
+                          avatar:
+                            type: string
+                          pending:
+                            type: boolean
+                          orgRoleId:
+                            type: integer
+                          id:
+                            type: integer
+                          createdAt:
+                            type: string
+                            format: date-time
+                          updatedAt:
+                            type: string
+                            format: date-time
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-  /users/{userId}:
+                $ref: "#/components/schemas/Error"
+  "/users/{userId}":
     get:
       description: Returns a user based on a single ID
       operationId: findUserById
@@ -1438,9 +1885,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: user response
           content:
             application/json:
@@ -1448,13 +1894,14 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/user.yml#/User'
+                    $ref: "#/paths/~1users/post/responses/201/content/application~1\
+                      json/schema/properties/data"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     put:
       description: Update a user based on a single ID - full or partial update
       operationId: updateUser
@@ -1467,16 +1914,19 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: User body to update - allows partial field update
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/user.yml#/UpdateUser'
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
       responses:
-        '200':
+        "200":
           description: user response
           content:
             application/json:
@@ -1484,14 +1934,14 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: './definitions/user.yml#/User'
+                    $ref: "#/paths/~1users/post/responses/201/content/application~1\
+                      json/schema/properties/data"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
+                $ref: "#/components/schemas/Error"
     delete:
       description: deletes a single user based on the ID supplied
       operationId: deleteUser
@@ -1504,18 +1954,16 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '204':
+        "204":
           description: user deleted
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-  /users/{userId}/orgrole:
+                $ref: "#/components/schemas/Error"
+  "/users/{userId}/orgrole":
     put:
       description: Update a user's organization role based on a single ID
       operationId: updateUserOrgRole
@@ -1528,24 +1976,25 @@ paths:
           required: true
           schema:
             type: integer
-
       requestBody:
         description: User organization role body
         required: true
         content:
           application/json:
             schema:
-              $ref: './definitions/user.yml#/UpdateUserOrgRole'
+              properties:
+                orgRoleId:
+                  type: integer
       responses:
-        '204':
+        "204":
           description: user org role response
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-  /users/{userId}/assignments:
+                $ref: "#/components/schemas/Error"
+  "/users/{userId}/assignments":
     get:
       description: Returns user assignments based on user id
       operationId: findUserAssignmentsById
@@ -1558,9 +2007,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: user assignments response
           content:
             application/json:
@@ -1570,14 +2018,16 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: './definitions/projectUser.yml#/ProjectUser'
+                      $ref: "#/paths/~1projects~1%7BprojectId%7D~1assignments/get/r\
+                        esponses/200/content/application~1json/schema/propertie\
+                        s/data/items"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-  /users/{userId}/projects:
+                $ref: "#/components/schemas/Error"
+  "/users/{userId}/projects":
     get:
       description: Returns projects based on user id
       operationId: findUserProjectsById
@@ -1590,9 +2040,8 @@ paths:
           required: true
           schema:
             type: integer
-
       responses:
-        '200':
+        "200":
           description: user projects response
           content:
             application/json:
@@ -1602,16 +2051,155 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: './definitions/project.yml#/Project'
+                      $ref: "#/components/schemas/Project"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
+                $ref: "#/components/schemas/Error"
 components:
+  securitySchemes:
+    bearerJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
+    Document:
+      type: object
+      allOf:
+        - required:
+            - name
+          properties:
+            name:
+              type: string
+        - required:
+            - id
+            - projectId
+        - properties:
+            id:
+              type: integer
+            projectId:
+              type: integer
+            publishedVersionId:
+              type: integer
+            lastPublishedAt:
+              type: string
+              format: date-time
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    Project:
+      allOf:
+        - required:
+            - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            accessLevel:
+              type: string
+              enum:
+                - read
+                - write
+        - required:
+            - id
+        - properties:
+            id:
+              type: integer
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    Field:
+      allOf:
+        - oneOf:
+            - title: String
+              required:
+                - name
+                - type
+              properties:
+                name:
+                  type: string
+                type:
+                  type: integer
+                  enum:
+                    - 1
+                value:
+                  type: string
+            - title: Text
+              required:
+                - name
+                - type
+              properties:
+                name:
+                  type: string
+                type:
+                  type: integer
+                  enum:
+                    - 2
+                value:
+                  type: string
+                structuredValue:
+                  type: string
+            - title: Number
+              required:
+                - name
+                - type
+              properties:
+                name:
+                  type: string
+                type:
+                  type: integer
+                  enum:
+                    - 3
+                value:
+                  type: number
+                  format: double
+                  description: Number value with maximum of 15 significant digits
+                    (including decimal digits). For longer numbers we recommend
+                    storing as a string and parsing the value in your code.
+            - title: Image
+              required:
+                - name
+                - type
+              properties:
+                name:
+                  type: string
+                type:
+                  type: integer
+                  enum:
+                    - 4
+                value:
+                  type: string
+                  description: Url of uploaded image
+                  example: https://www.google.com/test-image
+        - required:
+            - id
+            - name
+            - documentId
+            - type
+        - properties:
+            id:
+              type: integer
+            name:
+              type: string
+            documentId:
+              type: integer
+            type:
+              type: integer
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
     Error:
       required:
         - code
@@ -1629,11 +2217,12 @@ components:
         errorDetails:
           type: array
           items:
-            $ref: '#/components/schemas/ErrorDetail'
-
+            $ref: "#/components/schemas/ErrorDetail"
     ErrorDetail:
       properties:
         message:
           type: string
         key:
           type: string
+security:
+  - bearerJWT: []

@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate-docs": "npx openapi-filter --strip -- public/docs/openapi.yml public/docs/pre-processed.yml"
+    "generate-spec": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
