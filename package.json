@@ -32,8 +32,8 @@
   },
   "scripts": {
     "start": "NODE_ENV=production && node index.js",
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml && react-scripts start",
+    "build": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-spec": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml"
