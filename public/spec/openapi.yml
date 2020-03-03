@@ -1744,6 +1744,8 @@ paths:
     get:
       description: Returns all users that the user has access to
       operationId: findUsers
+      tags:
+        - Users
       parameters:
         - name: page
           in: query
