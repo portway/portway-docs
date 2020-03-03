@@ -22,7 +22,7 @@ See [Deploying Portway Docs](https://portway.app/d/project/3/document/5)
 
 Run
   ```bash
-  npx speccy lint public/docs/openapi.yml
+  npx speccy lint public/spec/openapi.yml
   ```
 
 ---
