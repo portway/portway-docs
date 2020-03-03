@@ -1370,8 +1370,6 @@ paths:
     get:
       description: Returns all users that the user has access to
       operationId: findUsers
-      tags:
-        - Users
       parameters:
         - name: page
           in: query
@@ -1383,6 +1381,30 @@ paths:
           description: number of users to return per page
           schema:
             type: integer
+        - name: nameSearch
+          in: query
+          description: search by user name (partial matching)
+          schema:
+            type: string
+        - name: sortBy
+          in: query
+          description: what user value to look at when sorting results
+          schema:
+            type: string
+            enum: [name, createdAt]
+        - name: sortMethod
+          in: query
+          description: whether to return ascending or descending sort results (default is ascending)
+          schema:
+            type: string
+            enum: [ASC, DESC]
+        - name: ids
+          in: query
+          description: batch ids of users to return
+          schema:
+            type: array
+            items:
+              type: number
 
       responses:
         '200':
