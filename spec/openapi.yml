@@ -10,11 +10,48 @@ info:
     The Portway API.
 
     # Introduction
-    You are viewing a beta version of the Portway API spec. If you have any feedback or questions,
+    Learn how to use the Portway API. If you have any feedback or questions,
     please [contact us](mailto:feedback@bonkeybong.com).
 
+    ## Quick Start
+
+    ### Step 1. Choose or create a project
+    The first step is to pick a project we can interact with via the Portway API. Either use an existing project or create a new one in the [Portway app](https://portway.app/d/projects).
+
+    ### Step 2. Create a project token
+    You'll need the project token to interact with the Portway API. Under the project settings from step 1, select "API Keys" and then click the "Add project key" button. Give the key any name, and for this example "Read" level access is sufficient.
+
+    ### Step 3. Make an API request
+    We'll use curl for these examples. Replace `<token>` with the token from step 2, and in the url replace `<id>` with the project id. You can find the project id by looking at the url of the project in the app.
+    ```bash
+    curl -H "Authorization: Bearer <token>" https://api.portway.app/api/v1/projects/<id>
+    ```
+
+    ### Step 4. View project documents
+    Let's take a look at what documents we have in the project.  
+    **Note:** Don't see any documents? Make sure you've published a document in your project. Or alternatively, add the `?draft=true` query parameter to the request url to get draft documents.
+
+    Make sure to replace `<id>` with the project id again.
+    ```bash
+    curl -H "Authorization: Bearer <token>" https://api.portway.app/api/v1/projects/<id>/documents
+    ```
+
+    ### Step 5. View document fields
+    Great, so now you've hopefully seen information about your document, but what about the content in the document? Portway documents consist of fields, so we'll need to get the document with its fields.
+
+    Replace `<id>` with a document id from the previous step.
+    ```bash
+    curl -H "Authorization: Bearer <token>" https://api.portway.app/api/v1/documents/<id>
+    ```
+
+    And there it is! A document with fields populated.
+
     # Authentication
-    The Portway API authenticates via bearer tokens in the Authorization header
+    The Portway API authenticates via bearer tokens in the Authorization header.
+
+    There are two types of Portway tokens:
+    1. User account tokens. These tokens grant access to everything the user can access. Therefore these tokens expire in 7 days.
+    2. Project tokens. These tokens contain read, write, or admin permissions for a single project. These tokens can be generated in the app and they do not expire.
 
     **Example:**
     ```bash
@@ -132,6 +169,9 @@ paths:
                 $ref: '#/components/schemas/Error'
   /projects/{projectId}:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Returns a project based on a single ID
       operationId: findProjectById
       tags:
@@ -161,6 +201,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Update a project based on a single ID - full or partial update
       operationId: updateProject
       tags:
@@ -198,6 +241,9 @@ paths:
                 $ref: '#/components/schemas/Error'
 
     delete:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: deletes a single project based on the ID supplied
       operationId: deleteProject
       tags:
@@ -222,6 +268,9 @@ paths:
 
   /projects/{projectId}/documents:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Returns all documents that the user has access to for the given project id
       operationId: findProjectDocuments
       tags:
@@ -257,6 +306,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Creates a new document
       operationId: addProjectDocument
       tags:
@@ -295,6 +347,9 @@ paths:
 
   /projects/{projectId}/documents/{documentId}:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Returns a document based on a single ID
       operationId: findProjectDocumentById
       tags:
@@ -335,6 +390,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Update a document based on a single ID - full or partial update
       operationId: updateDocument
       tags:
@@ -377,6 +435,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     delete:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: deletes a single document based on the ID supplied
       operationId: deleteDocument
       tags:
@@ -407,6 +468,9 @@ paths:
 
   /projects/{projectId}/assignments:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: |
         Returns all project user assignments
       operationId: findProjectUsers
@@ -444,6 +508,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Creates a new project user assignment
       operationId: addProjectUser
       tags:
@@ -482,6 +549,9 @@ paths:
 
   /projects/{projectId}/assignments/{assignmentId}:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Returns a project user assignment based on a single ID
       operationId: findProjectUserById
       tags:
@@ -589,6 +659,9 @@ paths:
 
   /projects/{projectId}/tokens:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: |
         Returns all project tokens
       operationId: findProjectTokens
@@ -621,6 +694,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Creates a new project token
       operationId: addProjectToken
       tags:
@@ -659,6 +735,9 @@ paths:
 
   /projects/{projectId}/tokens/{tokenId}:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Returns a project token based on a single ID
       operationId: findProjectTokenById
       tags:
@@ -694,6 +773,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Update a project token based on a single ID
       operationId: updateProjectToken
       tags:
@@ -736,6 +818,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     delete:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: deletes a single project token based on the ID supplied
       operationId: deleteProjectToken
       tags:
@@ -766,6 +851,9 @@ paths:
 
   /documents/{documentId}:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Returns a document based on a single ID with all document fields populated
       operationId: findPopulatedDocumentById
       tags:
@@ -802,6 +890,9 @@ paths:
 
   /documents/{documentId}/publish:
     post:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Publishes a document based on ID
       operationId: publishDocument
       tags:
@@ -826,6 +917,9 @@ paths:
 
   /documents/{documentId}/unpublish:
     post:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Unpublishes a document based on ID
       operationId: unpublishDocument
       tags:
@@ -850,6 +944,9 @@ paths:
 
   /documents/{documentId}/fields:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: |
         Returns all fields that the user has access to for the given project/document ids
       operationId: findFields
@@ -887,6 +984,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Creates a new field
       operationId: addField
       tags:
@@ -929,6 +1029,9 @@ paths:
 
   /documents/{documentId}/fields/{fieldId}:
     get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Returns a field based on a single ID
       operationId: findFieldById
       tags:
@@ -964,6 +1067,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Update a field based on a single ID - full or partial update
       operationId: updateField
       tags:
@@ -1010,6 +1116,9 @@ paths:
                 $ref: '#/components/schemas/Error'
 
     delete:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: deletes a single field based on the ID supplied
       operationId: deleteField
       tags:
@@ -1040,6 +1149,9 @@ paths:
 
   /documents/{documentId}/fields/{fieldId}/order:
     put:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
       description: Update field order based on a field ID
       operationId: updateFieldOrder
       tags:
@@ -1656,6 +1768,11 @@ components:
 
   securitySchemes:
     bearerJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+    projectJWT:
       type: http
       scheme: bearer
       bearerFormat: JWT
