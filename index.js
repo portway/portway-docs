@@ -1,5 +1,6 @@
 const Fastify = require('fastify')
 const path = require('path')
+const fastifyStatic = require('fastify-static')
 
 // https is necessary otherwise browsers will not
 // be able to connect
@@ -13,9 +14,9 @@ const fastify = Fastify({
   logger: true
 })
 
-fastify.register(require('fastify-static'), {
+fastify.register(fastifyStatic, {
   root: path.join(__dirname, 'build'),
-  wildcard: true,
+  wildcard: true
 })
 
 fastify.setNotFoundHandler((req, res) => {
