@@ -2,6 +2,13 @@
 
 This project uses [Create React App](https://github.com/facebook/create-react-app), [Fastify](https://www.fastify.io/), and [Redoc](https://github.com/Redocly/redoc).
 
+## Development
+
+We're proxying 3003->3000 for the docs local development so that Webpack Dev Server can hit the Fastify local API.
+
+1. Run `npm run local` in one window
+1. Run `npm run dev` in another window
+
 ## Deployment
 
 See [Deploying Portway Docs](https://portway.app/d/project/3/document/5)
