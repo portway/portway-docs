@@ -33,10 +33,10 @@ fastify.setNotFoundHandler((req, res) => {
 fastify.get('/api/guides', async (request, reply) => {
   try {
     if (memcache.get('guidesList')) {
-      return memcache.get('guidesList')
+      reply.send(memcache.get('guidesList'))
     } else {
       const result = await fetchGuides()
-      return result
+      reply.send(result)
     }
   } catch (err) {
     console.error(err)
@@ -46,10 +46,10 @@ fastify.get('/api/guides', async (request, reply) => {
 fastify.get('/api/guide/:id', async (request, reply) => {
   try {
     if (memcache.get(request.params.id)) {
-      return memcache.get(request.params.id)
+      reply.send(memcache.get(request.params.id))
     } else {
       const result = await fetchGuide(request.params.id)
-      return result
+      reply.send(result)
     }
   } catch (err) {
     console.error(err)

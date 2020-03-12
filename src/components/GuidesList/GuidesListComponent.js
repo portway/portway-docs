@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const GuidesListComponent = ({ guides }) => {
+  console.log(guides)
   if (guides && guides.length) {
     return (
       <ol>
