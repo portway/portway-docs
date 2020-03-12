@@ -1,0 +1,21 @@
+.guides-container {
+  display: flex;
+}
+
+.guides-container__navigation {
+  flex: 0 0 15%;
+  max-width: 400px;
+  margin: 4rem;
+}
+
+.guides-container__nav-block {
+  border-radius: var(--border-radius);
+  position: sticky;
+  top: 35px;
+}
+
+.guides-container__main {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}

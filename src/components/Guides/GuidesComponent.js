@@ -5,24 +5,26 @@ import { PATH_GUIDES } from '../../constants'
 import GuidesListContainer from '../GuidesList/GuidesListContainer'
 import GuideContainer from '../Guide/GuideContainer'
 
-import './GuideStyles.scss'
+import './GuideContainerStyles.scss'
 
 const GuidesComponent = () => {
   return (
-    <div className="guides-container">
+    <main className="guides-container">
       <nav className="guides-container__navigation" role="navigation">
-        <h3>Guides</h3>
-        <GuidesListContainer />
+        <div className="guides-container__nav-block">
+          <h3>Guides</h3>
+          <GuidesListContainer />
+        </div>
       </nav>
-      <main className="guides-container__main">
+      <div className="guides-container__main">
         <Route path={PATH_GUIDES} exact>
           <p>Learn how to make things with Portway.</p>
         </Route>
         <Route path={`${PATH_GUIDES}/:id`}>
           <GuideContainer />
         </Route>
-      </main>
-    </div>
+      </div>
+    </main>
   )
 }
 

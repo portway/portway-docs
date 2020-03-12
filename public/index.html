@@ -78,14 +78,15 @@
         max-width: 100%;
       }
       .masthead {
-        background-color: hsl(16, 80%, 59%);
-        border-top: .6rem solid hsl(16, 68%, 51%);
-        border-bottom: thin solid hsl(16, 68%, 51%);
+        background-color: var(--theme-surface);
+        /* background-color: hsl(16, 80%, 59%);
+        border-top: .6rem solid hsl(16, 68%, 51%); */
+        border-bottom: thin solid var(--theme-border);
         font-size: 1.5rem;
         padding: 0 1.7rem 0 1.6rem;
-        position: sticky;
+        /* position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 100; */
       }
       .masthead a {
         text-decoration: none;
@@ -106,9 +107,6 @@
         flex: 1;
         padding-right: 32px;
       }
-      .navigation a.active {
-        border-bottom: 4px solid hsl(16, 68%, 51%);
-      }
       .menu {
         align-items: center;
         display: flex;
@@ -125,7 +123,7 @@
       }
       .menu a {
         border-bottom: 4px solid transparent;
-        color: #fff;
+        color: var(--theme-text-color);
         display: block;
         height: 6.4rem;
         padding: 2.1rem .9rem;
@@ -137,7 +135,7 @@
         position: relative;
       }
       .menu a.active {
-        border-bottom: 4px solid hsl(16, 68%, 51%);
+        border-bottom: 4px solid var(--color-blue);
       }
       .btn {
         appearance: none;
@@ -156,7 +154,7 @@
       }
       @media (hover: hover) {
         .menu a:hover {
-          color: #fff;
+          color: var(--theme-header-color);
         }
         .btn:hover {
           background-color: hsl(125, 45%, 50%);

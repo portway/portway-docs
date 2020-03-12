@@ -25,9 +25,7 @@ const GuideContainer = () => {
   })
 
   return (
-    <div className="guide">
-      <GuideComponent guide={guide} />
-    </div>
+    <GuideComponent guide={guide} />
   )
 }
 

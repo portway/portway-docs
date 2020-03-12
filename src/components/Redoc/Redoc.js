@@ -11,7 +11,7 @@ const Redoc = () => {
     nativeScrollbars: true,
     pathInMiddlePanel: true,
     requiredPropsFirst: true,
-    scrollYOffset: 71,
+    scrollYOffset: 65,
     sortPropsAlphabetically: true,
   }
   // Theme
