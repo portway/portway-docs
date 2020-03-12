@@ -1,8 +1,16 @@
 import React, { useEffect, useRef, useState, createRef } from 'react'
 import PropTypes from 'prop-types'
 import marked from 'marked'
+import Prism from 'prismjs'
+
+import 'prismjs/components/prism-bash'
+import 'prismjs/components/prism-clike'
+// import 'prismjs/themes/prism-twilight.css'
 
 import './GuideStyles.scss'
+// Our own Portway prism theme!
+// http://k88hudson.github.io/syntax-highlighting-theme-generator/www/
+import './prism-theme.css'
 
 const slugger = new marked.Slugger()
 const HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
@@ -115,6 +123,12 @@ const GuideComponent = ({ guide }) => {
           switch (field.type) {
             case 2:
               const renderedMarkdown = marked(field.value, {
+                highlight: (code, lang) => {
+                  console.log(code)
+                  console.log(Prism.languages[lang])
+                  console.log(lang)
+                  return Prism.highlight(code, Prism.languages[lang], lang)
+                },
                 gfm: true,
               })
               return <div key={field.id} dangerouslySetInnerHTML={{ __html: renderedMarkdown }} />
