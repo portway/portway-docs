@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { RedocStandalone } from 'redoc'
 
 import './RedocOverride.scss'
 
 const Redoc = () => {
+  useEffect(() => {
+    document.body.classList.add('api')
+    return () => {
+      document.body.classList.remove('api')
+    }
+  })
   const redocOptions = {
     disableSearch: true,
     hideDownloadButton: true,
@@ -56,7 +62,9 @@ const Redoc = () => {
       letterSpacing: '-0.2px',
       lineHeight: '2.7rem',
       headings: {
-        fontWeight: 400,
+        color: '#000',
+        fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
+        fontWeight: 700,
         lineHeight: '3.4em',
       }
     },

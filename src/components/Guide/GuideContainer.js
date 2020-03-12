@@ -17,12 +17,12 @@ const GuideContainer = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    if (guide === null) {
+    if (guide === null || guide.id !== Number(id)) {
       fetchGuide(id).then((response) => {
         setGuide(response.data)
       })
     }
-  })
+  }, [guide, id])
 
   return (
     <GuideComponent guide={guide} />

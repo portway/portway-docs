@@ -12,8 +12,11 @@ import './GuideStyles.scss'
 // http://k88hudson.github.io/syntax-highlighting-theme-generator/www/
 import './prism-theme.css'
 
-const slugger = new marked.Slugger()
 const HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+const FIELD_TYPES = {
+  TEXT: 2,
+  IMAGE: 4,
+}
 
 function parseTitlesForToc(structuredValue) {
   const result = []
@@ -55,16 +58,23 @@ const GuideComponent = ({ guide }) => {
     const windowHeight = window.innerHeight
     const documentHeight = document.body.offsetHeight
     trackLength.current = documentHeight - windowHeight
-  }, [tableOfContents.length])
+    // Reset refs
+    tocItemsRef.current = []
+    tocActiveItemRef.current = null
+    tickingRef.current = false
+  }, [guide])
 
   // Set up the table of contents
   useEffect(() => {
     if (guide) {
+      const slugger = new marked.Slugger()
       // Create the table of contents
       let tocArray = []
       guide.fields.forEach((field) => {
-        const fieldHeadings = parseTitlesForToc(field.structuredValue)
-        tocArray = [...tocArray, ...fieldHeadings]
+        if (field.type === FIELD_TYPES.TEXT) {
+          const fieldHeadings = parseTitlesForToc(field.structuredValue)
+          tocArray = [...tocArray, ...fieldHeadings]
+        }
       })
       tocArray.forEach((title, i) => {
         tocItemsRef.current.push(
@@ -111,7 +121,7 @@ const GuideComponent = ({ guide }) => {
     return () => {
       document.removeEventListener('scroll', scrollHandler, { passive: true })
     }
-  }, [tableOfContents.length])
+  }, [guide, tableOfContents.length])
 
   return (
     <>
@@ -121,17 +131,18 @@ const GuideComponent = ({ guide }) => {
         }
         {guide && guide.fields.map((field) => {
           switch (field.type) {
-            case 2:
+            case FIELD_TYPES.TEXT:
               const renderedMarkdown = marked(field.value, {
                 highlight: (code, lang) => {
-                  console.log(code)
-                  console.log(Prism.languages[lang])
-                  console.log(lang)
-                  return Prism.highlight(code, Prism.languages[lang], lang)
+                  if (Prism.languages[lang]) {
+                    return Prism.highlight(code, Prism.languages[lang], lang)
+                  }
                 },
                 gfm: true,
               })
               return <div key={field.id} dangerouslySetInnerHTML={{ __html: renderedMarkdown }} />
+            case FIELD_TYPES.IMAGE:
+              return <img key={field.id} src={field.value} alt={field.name} />
             default:
               return null
           }
@@ -139,7 +150,9 @@ const GuideComponent = ({ guide }) => {
       </article>
       <aside className="guide__toc">
         <div className="guide__toc-block">
+          {tableOfContents.length > 0 &&
           <h3>In this guide...</h3>
+          }
           <ol className="guide__toc-list" ref={tocBlockRef}>
             {tableOfContents.length > 0 && tocItemsRef.current.length > 0 && tocItemsRef.current}
           </ol>
