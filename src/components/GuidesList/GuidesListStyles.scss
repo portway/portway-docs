@@ -1,0 +1,15 @@
+.guides-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: sticky;
+  top: 0;
+}
+
+.guides-list__link {
+  color: var(--color-gray-50);
+  &.active {
+    color: var(--color-blue-light);
+  }
+}
+
