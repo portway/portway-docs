@@ -20,7 +20,7 @@ const GuidesComponent = () => {
         <Route path={PATH_GUIDES} exact>
           <p>Learn how to make things with Portway.</p>
         </Route>
-        <Route path={`${PATH_GUIDES}/:id`}>
+        <Route path={`${PATH_GUIDES}/:id/:slug`}>
           <GuideContainer />
         </Route>
       </div>
