@@ -2,9 +2,11 @@
   "name": "portway-docs",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3003",
   "dependencies": {
     "fastify": "^2.12.0",
-    "fastify-static": "^2.6.0"
+    "fastify-static": "^2.6.0",
+    "memory-cache": "^0.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -18,8 +20,10 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.3.0",
+    "marked": "^0.8.0",
     "mobx": "^5.15.4",
     "node-sass": "^4.13.1",
+    "nodemon": "^2.0.2",
     "openapi-filter": "^1.5.1",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
@@ -32,6 +36,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production && node index.js",
+    "local": "NODE_ENV=development && nodemon index.js",
     "dev": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml && react-scripts start",
     "build": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml && react-scripts build",
     "test": "react-scripts test",
