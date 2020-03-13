@@ -32,8 +32,9 @@ fastify.setNotFoundHandler((req, res) => {
 
 fastify.get('/api/guides', async (request, reply) => {
   try {
-    if (memcache.get('guidesList')) {
-      reply.send(memcache.get('guidesList'))
+    const guidesFromCache = memcache.get('guidesList')
+    if (guidesFromCache) {
+      reply.send(guidesFromCache)
     } else {
       const result = await fetchGuides()
       reply.send(result)
@@ -45,8 +46,9 @@ fastify.get('/api/guides', async (request, reply) => {
 
 fastify.get('/api/guide/:id', async (request, reply) => {
   try {
-    if (memcache.get(request.params.id)) {
-      reply.send(memcache.get(request.params.id))
+    const guideFromCache = memcache.get(request.params.id)
+    if (guideFromCache) {
+      reply.send(guideFromCache)
     } else {
       const result = await fetchGuide(request.params.id)
       reply.send(result)
