@@ -2,6 +2,12 @@ body {
   background: var(--theme-surface);
 }
 
+img {
+  height: auto;
+  display: block;
+  max-width: 100%;
+}
+
 form {
   label, .label {
     display: block;

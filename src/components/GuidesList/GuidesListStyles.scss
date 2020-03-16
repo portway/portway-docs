@@ -8,8 +8,10 @@
 
 .guides-list__link {
   color: var(--color-gray-50);
+  text-decoration: none;
   &.active {
     color: var(--color-blue-light);
+    font-weight: 500;
   }
 }
 
