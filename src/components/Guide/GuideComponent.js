@@ -140,7 +140,6 @@ const GuideComponent = ({ guide }) => {
               if (field && field.value) {
                 const renderedMarkdown = marked(field.value, {
                   highlight: (code, lang) => {
-                    console.log(code)
                     if (Prism.languages[lang]) {
                       return Prism.highlight(code, Prism.languages[lang], lang)
                     }
