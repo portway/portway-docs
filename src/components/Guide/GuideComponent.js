@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState, createRef } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import marked from 'marked'
 import Prism from 'prismjs'
+
+import { PATH_GUIDES } from '../../constants'
 
 import 'prismjs/components/prism-bash'
 import 'prismjs/components/prism-clike'
@@ -53,7 +56,7 @@ const GuideComponent = ({ guide }) => {
     }
   }
 
-  // SEt up window scroll values
+  // Set up window scroll values
   useEffect(() => {
     const windowHeight = window.innerHeight
     const documentHeight = document.body.offsetHeight
@@ -68,6 +71,7 @@ const GuideComponent = ({ guide }) => {
   useEffect(() => {
     if (guide) {
       const slugger = new marked.Slugger()
+      const guideSlug = slugger.slug(guide.name)
       // Create the table of contents
       let tocArray = []
       guide.fields.forEach((field) => {
@@ -77,14 +81,15 @@ const GuideComponent = ({ guide }) => {
         }
       })
       tocArray.forEach((title, i) => {
+        const titleSlug = slugger.slug(title.children[0].data)
         tocItemsRef.current.push(
           <li
-            data-id={slugger.slug(title.children[0].data)}
+            data-id={titleSlug}
             className={`guide__toc-item guide__toc-item--${title.tag}`}
             key={i}
             ref={createRef()}
           >
-            {title.children[0].data}
+            <Link to={{ pathname: `${PATH_GUIDES}/${guide.id}/${guideSlug}`, hash: `#${titleSlug}` }}>{title.children[0].data}</Link>
           </li>
         )
       })
@@ -132,17 +137,21 @@ const GuideComponent = ({ guide }) => {
         {guide && guide.fields.map((field) => {
           switch (field.type) {
             case FIELD_TYPES.TEXT:
-              const renderedMarkdown = marked(field.value, {
-                highlight: (code, lang) => {
-                  if (Prism.languages[lang]) {
-                    return Prism.highlight(code, Prism.languages[lang], lang)
-                  }
-                },
-                gfm: true,
-              })
-              return <div key={field.id} dangerouslySetInnerHTML={{ __html: renderedMarkdown }} />
+              if (field && field.value) {
+                const renderedMarkdown = marked(field.value, {
+                  highlight: (code, lang) => {
+                    console.log(code)
+                    if (Prism.languages[lang]) {
+                      return Prism.highlight(code, Prism.languages[lang], lang)
+                    }
+                  },
+                  gfm: true,
+                })
+                return <div key={field.id} dangerouslySetInnerHTML={{ __html: renderedMarkdown }} />
+              }
+              return null
             case FIELD_TYPES.IMAGE:
-              return <img key={field.id} src={field.value} alt={field.name} />
+              return <img key={field.id} className={`guide__image guide__image--${field.name}`} src={field.value} alt={field.name} />
             default:
               return null
           }
