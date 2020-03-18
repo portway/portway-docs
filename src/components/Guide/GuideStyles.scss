@@ -90,16 +90,23 @@
 }
 
 .guide__toc-item {
+  a { text-decoration: none; }
   &--h2 {
-    color: var(--color-gray-50);
-    font-weight: 500;
+    a {
+      color: var(--color-gray-50);
+      font-weight: 500;
+    }
   }
   &--h3 {
-    color: var(--color-gray-40);
-    padding-left: 1rem;
+    a {
+      color: var(--color-gray-40);
+      padding-left: 1rem;
+    }
   }
   &.active {
-    color: var(--theme-header-color);
-    font-weight: 700;
+    a {
+      color: var(--theme-header-color);
+      font-weight: 700;
+    }
   }
 }

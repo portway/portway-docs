@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, createRef } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { HashLink as Link } from 'react-router-hash-link'
 import marked from 'marked'
 import Prism from 'prismjs'
 
@@ -89,7 +89,7 @@ const GuideComponent = ({ guide }) => {
             key={i}
             ref={createRef()}
           >
-            <Link to={{ pathname: `${PATH_GUIDES}/${guide.id}/${guideSlug}`, hash: `#${titleSlug}` }}>{title.children[0].data}</Link>
+            <Link smooth to={{ pathname: `${PATH_GUIDES}/${guide.id}/${guideSlug}`, hash: `#${titleSlug}` }}>{title.children[0].data}</Link>
           </li>
         )
       })
