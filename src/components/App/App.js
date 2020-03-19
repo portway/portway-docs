@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import { PATH_API, PATH_GUIDES } from '../../constants'
 import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 import Redoc from '../Redoc/Redoc'
 import Home from '../Home/Home'
 import GuidesContainer from '../Guides/GuidesContainer'
@@ -33,6 +34,7 @@ export default function App() {
           </Route>
         </Switch>
       </ErrorBoundary>
+      <Footer />
     </Router>
   )
 }

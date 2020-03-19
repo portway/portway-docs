@@ -66,7 +66,13 @@
         padding: 0;
         -webkit-font-smoothing: antialiased;
       }
+      .application {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
       .container {
+        flex: 1;
         padding: 4rem 4rem;
         max-width: 2024px;
       }
@@ -150,7 +156,20 @@
         white-space: nowrap;
         -webkit-appearance: none;
       }
+      .footer {
+        color: var(--color-gray-30);
+        padding: 4rem;
+      }
+      .footer p {
+        font-size: 1.3rem;
+      }
+      .footer a {
+        color: var(--color-gray-40);
+      }
       @media (hover: hover) {
+        .footer a:hover {
+          color: var(--color-gray-50);
+        }
         .menu a:hover {
           color: var(--theme-header-color);
         }
@@ -171,7 +190,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root" class="application"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
