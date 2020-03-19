@@ -40,11 +40,11 @@
   "scripts": {
     "start": "NODE_ENV=production && node index.js",
     "local": "NODE_ENV=development && nodemon index.js",
-    "dev": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml && react-scripts start",
-    "build": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml && react-scripts build",
+    "dev": "npm run generate-spec && react-scripts start",
+    "build": "npm run generate-spec && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate-spec": "npx speccy resolve spec/openapi.yml > public/spec/openapi.yml"
+    "generate-spec": "cp -r spec/definitions public/spec/definitions && npx openapi-filter --strip -- spec/openapi.yml public/spec/openapi.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
