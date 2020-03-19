@@ -13,7 +13,7 @@ const Home = () => {
       <article className="container home">
         <h1>Portway documentation</h1>
         <p>
-          We’re working on guides, sample projects, and more. Are you a developer? Read the
+          We’re working on guides, sample projects, and more. Are you a developer? Read the{` `}
           <Link to={PATH_API}>API docs</Link> and start seeing what you can do with the Portway API.
         </p>
         <section className="section">

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import { SITE_NAME } from '../../constants'
+import NotFound from '../NotFound/NotFound'
 import GuideComponent from './GuideComponent'
 
 async function fetchGuide(id) {
@@ -16,11 +17,16 @@ async function fetchGuide(id) {
 
 const GuideContainer = () => {
   const [guide, setGuide] = useState(null)
+  const [hasError, setError] = useState(false)
   const { id } = useParams()
 
   useEffect(() => {
     if (guide === null || guide.id !== Number(id)) {
       fetchGuide(id).then((response) => {
+        if (response.error) {
+          setError(true)
+          return
+        }
         setGuide(response.data)
       })
     }
@@ -31,7 +37,12 @@ const GuideContainer = () => {
       <Helmet>
         <title>{`${guide && guide.name} – ${SITE_NAME}`}</title>
       </Helmet>
+      {hasError &&
+        <NotFound optionalMessage="Sorry, that guide doesn’t exist" />
+      }
+      {!hasError &&
       <GuideComponent guide={guide} />
+      }
     </>
   )
 }
