@@ -8,10 +8,67 @@
   max-width: 900px;
   padding: 4rem 2rem;
 
+  blockquote {
+    color: var(--color-purple);
+    font-size: 4.4rem;
+    line-height: 5.4rem;
+    font-weight: 300;
+    p {
+      font-size: 4.4rem;
+      line-height: 5.4rem;
+      font-weight: 300;
+    }
+  }
+
   pre {
     background-color: var(--color-gray-3);
-    border-radius: var(--border-radius);
+    font-size: 13px;
     padding: 1rem;
+    code {
+      background-color: var(--color-gray-3);
+      padding: 3px;
+    }
+  }
+  code {
+    background-color: var(--color-gray-8);
+    border-radius: var(--border-radius);
+    color: var(--theme-header-color);
+    font-size: 13px;
+    padding: 3px;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin: 2rem 0 3rem;
+    width: 100%;
+  }
+
+  tr {
+    border-top: thin solid var(--theme-border);
+    border-bottom: thin solid var(--theme-border);
+    border-right: thin solid var(--theme-border);
+  }
+
+  td, th {
+    border-left: thin solid var(--theme-border);
+    padding: .5rem;
+  }
+
+}
+
+.guide__image {
+  display: block;
+  height: auto;
+  max-width: 100%;
+
+  &--align-right {
+    float: right;
+    width: 40%;
+  }
+
+  &--align-left {
+    float: left;
+    width: 40%;
   }
 
 }
@@ -33,16 +90,23 @@
 }
 
 .guide__toc-item {
+  a { text-decoration: none; }
   &--h2 {
-    color: var(--color-gray-50);
-    font-weight: 500;
+    a {
+      color: var(--color-gray-50);
+      font-weight: 500;
+    }
   }
   &--h3 {
-    color: var(--color-gray-40);
-    padding-left: 1rem;
+    a {
+      color: var(--color-gray-40);
+      padding-left: 1rem;
+    }
   }
   &.active {
-    color: var(--theme-header-color);
-    font-weight: 700;
+    a {
+      color: var(--theme-header-color);
+      font-weight: 700;
+    }
   }
 }
