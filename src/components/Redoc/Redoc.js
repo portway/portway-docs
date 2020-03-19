@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { RedocStandalone } from 'redoc'
 
+import { SITE_TITLE } from '../../constants'
 import './RedocOverride.scss'
 
 const Redoc = () => {
@@ -77,13 +79,18 @@ const Redoc = () => {
     }
   }
   return (
-    <RedocStandalone
-      options={{
-        ...redocOptions,
-        theme: theme
-      }}
-      specUrl={`${process.env.PUBLIC_URL}/spec/openapi.yml`}
-    />
+    <>
+      <Helmet>
+        <title>API Docs – {SITE_TITLE}</title>
+      </Helmet>
+      <RedocStandalone
+        options={{
+          ...redocOptions,
+          theme: theme
+        }}
+        specUrl={`${process.env.PUBLIC_URL}/spec/openapi.yml`}
+      />
+    </>
   )
 }
 

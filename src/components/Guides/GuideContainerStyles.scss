@@ -1,5 +1,7 @@
 .guides-container {
   display: flex;
+  flex: 1;
+  max-width: 2024px;
 }
 
 .guides-container__navigation {
