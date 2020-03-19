@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
+import { SITE_NAME } from '../../constants'
 import GuideComponent from './GuideComponent'
 
 async function fetchGuide(id) {
@@ -25,7 +27,12 @@ const GuideContainer = () => {
   }, [guide, id])
 
   return (
-    <GuideComponent guide={guide} />
+    <>
+      <Helmet>
+        <title>{`${guide && guide.name} – ${SITE_NAME}`}</title>
+      </Helmet>
+      <GuideComponent guide={guide} />
+    </>
   )
 }
 

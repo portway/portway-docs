@@ -2,6 +2,7 @@
 @import './inc/color';
 @import './inc/type';
 @import './inc/base';
+@import './inc/include-media';
 
 body {
   background-color: var(--theme-surface);
@@ -23,6 +24,10 @@ a {
   }
 }
 
+p {
+  max-width: 750px;
+}
+
 hr {
   border: none;
   border-top: thin solid var(--theme-border);
@@ -31,4 +36,49 @@ hr {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.home {
+  .card-list {
+    margin: 1rem 0;
+  }
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.card-list {
+  display: grid;
+  gap: 2rem;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include media('>medium') {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.card {
+  background-color: var(--theme-overlay-light);
+  border-radius: var(--border-radius);
+  color: var(--theme-text-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-blue);
+      box-shadow: var(--box-shadow);
+      color: rgba(255, 255, 255, .9);
+      // transform: scale(1.02);
+    }
+  }
+
 }
