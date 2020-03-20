@@ -1,64 +1,58 @@
 {
-  "name": "portway-docs",
-  "version": "0.1.0",
+  "name": "portway-documentation",
   "private": true,
-  "proxy": "http://localhost:3003",
+  "description": "The website for https://docs.portway.app/",
+  "version": "2020.3.20.10",
+  "author": "BonkeyBong, LLC",
   "dependencies": {
-    "fastify": "^2.12.0",
-    "fastify-static": "^2.6.0",
-    "memory-cache": "^0.2.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^7.2.1",
-    "babel-eslint": "^10.0.3",
+    "classnames": "^2.2.6",
     "core-js": "^3.6.4",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "marked": "^0.8.0",
+    "gatsby": "^2.19.45",
+    "gatsby-image": "^2.2.44",
+    "gatsby-plugin-manifest": "^2.2.48",
+    "gatsby-plugin-offline": "^3.0.41",
+    "gatsby-plugin-react-helmet": "^3.1.24",
+    "gatsby-plugin-sass": "^2.1.31",
+    "gatsby-source-filesystem": "^2.1.56",
+    "marked": "^0.8.1",
     "mobx": "^5.15.4",
     "node-sass": "^4.13.1",
-    "nodemon": "^2.0.2",
     "openapi-filter": "^1.5.1",
-    "prettier": "^1.19.1",
     "prismjs": "^1.19.0",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
-    "react-router-dom": "^5.1.2",
-    "react-router-hash-link": "^1.2.2",
-    "react-scripts": "3.3.1",
     "redoc": "^2.0.0-rc.23",
     "speccy": "^0.11.0",
     "styled-components": "^5.0.1"
   },
+  "devDependencies": {
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1"
+  },
+  "keywords": [],
+  "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=production && node index.js",
-    "local": "NODE_ENV=development && nodemon index.js",
-    "dev": "npm run generate-spec && react-scripts start",
-    "build": "npm run generate-spec && react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "generate-spec": "cp -r spec/definitions public/spec/definitions && npx openapi-filter --strip -- spec/openapi.yml public/spec/openapi.yml"
+    "build": "npm run generate-spec && gatsby build",
+    "develop": "npm run generate-spec && gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "generate-spec": "cp -r spec/definitions static/spec/definitions && npx openapi-filter --strip -- spec/openapi.yml static/spec/openapi.yml"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BonkeyBong/portway-docs"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "bugs": {
+    "url": "https://github.com/BonkeyBong/portway-docs/issues"
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'gatsby'
 
-import { PATH_APP, PATH_API, PATH_GUIDES } from '../../constants'
+import { PATH_APP, PATH_API, PATH_GUIDES } from '../../../constants'
 import logo from '../../images/logo-horizontal.svg'
 
 import './Header.scss'
@@ -15,8 +15,8 @@ const Header = () => {
         </Link>
         <nav className="navigation" role="navigation" aria-label="Main navigation">
           <ul id="menu" className="menu">
-            <li><NavLink to={PATH_GUIDES}><span>Guides</span></NavLink></li>
-            <li><NavLink to={PATH_API}><span>API</span></NavLink></li>
+            <li><Link activeClassName="active" to={PATH_GUIDES}><span>Guides</span></Link></li>
+            <li><Link activeClassName="active" to={PATH_API}><span>API</span></Link></li>
           </ul>
         </nav>
         <div id="info" className="masthead__info">
