@@ -1,5 +1,7 @@
 # Portway Documentation
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/09e6572a-512e-4075-bffc-374c78b6ae13/deploy-status)](https://app.netlify.com/sites/portway-docs/deploys)
+
 https://docs.portway.app/
 
 This site uses Gatsby and consumes content from Portway using a gatsby source plugin.
