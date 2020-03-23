@@ -15,7 +15,11 @@ gatsby develop
 
 ## 💫 Deploy
 
-Run a `gatsby build`, and create a new PR to master. Once this is merged, it will deploy to Netlify. Want to run a manual deployment?
+Deployments are through Netlify. `master` is automatically deployed when it's updated.
+
+Every pull request gets a special preview URL, so that you can test changes there.
+
+Want to run a manual deployment?
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/BonkeyBong/portway-docs.git)
 
