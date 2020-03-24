@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState, createRef } from 'react'
 import PropTypes from 'prop-types'
-import { HashLink as Link } from 'react-router-hash-link'
 import marked from 'marked'
 import Prism from 'prismjs'
 
-import { PATH_GUIDES } from '../../constants'
+import { PATH_GUIDES } from '../../../constants'
 
 import 'prismjs/components/prism-bash'
 import 'prismjs/components/prism-clike'
@@ -22,6 +21,7 @@ const FIELD_TYPES = {
 }
 
 function parseTitlesForToc(structuredValue) {
+  if (!structuredValue) return
   const result = []
   structuredValue.forEach((item) => {
     if (HEADING_TAGS.includes(item.tag)) {
@@ -74,9 +74,12 @@ const GuideComponent = ({ guide }) => {
       const guideSlug = slugger.slug(guide.name)
       // Create the table of contents
       let tocArray = []
-      guide.fields.forEach((field) => {
+      guide.content.forEach((field) => {
         if (field.type === FIELD_TYPES.TEXT) {
-          const fieldHeadings = parseTitlesForToc(field.structuredValue)
+          let fieldHeadings = []
+          if (field.structuredValue) {
+            fieldHeadings = parseTitlesForToc(field.structuredValue)
+          }
           tocArray = [...tocArray, ...fieldHeadings]
         }
       })
@@ -89,7 +92,7 @@ const GuideComponent = ({ guide }) => {
             key={i}
             ref={createRef()}
           >
-            <Link smooth to={{ pathname: `${PATH_GUIDES}/${guide.id}/${guideSlug}`, hash: `#${titleSlug}` }}>{title.children[0].data}</Link>
+            <a href={`${PATH_GUIDES}/${guide.id}/${guideSlug}#${titleSlug}`}>{title.children[0].data}</a>
           </li>
         )
       })
@@ -134,7 +137,7 @@ const GuideComponent = ({ guide }) => {
         {guide &&
         <h1>{guide.name}</h1>
         }
-        {guide && guide.fields.map((field) => {
+        {guide && guide.content.map((field) => {
           switch (field.type) {
             case FIELD_TYPES.TEXT:
               if (field && field.value) {
