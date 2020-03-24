@@ -92,7 +92,7 @@ const GuideComponent = ({ guide }) => {
             key={i}
             ref={createRef()}
           >
-            <a href={`${PATH_GUIDES}/${guide.id}/${guideSlug}#${titleSlug}`}>{title.children[0].data}</a>
+            <a href={`${PATH_GUIDES}/${guideSlug}#${titleSlug}`}>{title.children[0].data}</a>
           </li>
         )
       })
