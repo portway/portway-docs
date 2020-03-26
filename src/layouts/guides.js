@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import { SITE_TITLE } from '../../constants'
 import Header from '../components/Header/Header'
+import Footer from '../components/Footer/Footer'
 import GuideComponent from '../components/Guide/GuideComponent'
 import GuidesListContainer from '../components/GuidesList/GuidesListContainer'
 
@@ -11,7 +12,7 @@ import './guidesStyles.scss'
 
 const GuidesLayout = ({ pageContext }) => {
   return (
-    <>
+    <div className="document">
       <Helmet>{pageContext.guide.name} – {SITE_TITLE}</Helmet>
       <Header />
       <main className="guides-container">
@@ -25,7 +26,8 @@ const GuidesLayout = ({ pageContext }) => {
           <GuideComponent guide={pageContext.guide} />
         </div>
       </main>
-    </>
+      <Footer />
+    </div>
   )
 }
 

@@ -6,8 +6,13 @@
 
 body {
   background-color: var(--theme-surface);
+  // background-image: url('../images/bg-illustration.svg');
+  // background-position: bottom left;
+  // background-size: 100%;
+  // background-repeat: no-repeat;
   color: var(--theme-text-color);
   margin: 0;
+  min-height: 100vh;
   padding: 0;
 }
 
@@ -42,6 +47,12 @@ code {
   .card-list {
     margin: 1rem 0;
   }
+}
+
+.document {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .section {
