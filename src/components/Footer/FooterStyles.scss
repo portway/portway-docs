@@ -6,9 +6,13 @@
   color: var(--color-gray-30);
   min-height: 518px;
   padding: 0 4rem 0;
+  position: relative;
 
   p {
     font-size: 1.3rem;
+    line-height: 1.8rem;
+    margin: 0;
+    padding: .5rem 0;
   }
 
   a {
@@ -20,4 +24,14 @@
     }
   }
 
+}
+
+.footer__copyright {
+  background-color: var(--theme-overflow);
+  border: thin solid var(--theme-border);
+  border-radius: var(--border-radius);
+  bottom: 2rem;
+  font-size: 1.3rem;
+  padding: 0 1rem;
+  position: absolute;
 }

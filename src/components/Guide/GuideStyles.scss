@@ -1,3 +1,5 @@
+@import '../../styles/inc/include-media';
+
 .guide {
   height: 100%;
   overflow-y: auto;
@@ -6,7 +8,10 @@
 
 .guide__content {
   max-width: 900px;
-  padding: 4rem 2rem;
+
+  @include media('>large') {
+    padding: 4rem 2rem;
+  }
 
   blockquote {
     color: var(--color-purple);
@@ -74,8 +79,12 @@
 }
 
 .guide__toc {
+  display: none;
   flex: 0 0 30%;
   padding: 12rem 4rem 4rem;
+  @include media('>medium') {
+    display: block;
+  }
 }
 
 .guide__toc-block {

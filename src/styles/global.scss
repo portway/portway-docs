@@ -79,13 +79,29 @@ code {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1rem;
   text-decoration: none;
   transition: transform 0.2s ease-in-out;
+
+  .card__image {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+  }
+
+  .card__content {
+    flex: 1;
+    padding: 1.2rem;
+  }
 
   .card__meta {
     align-items: center;
     display: flex;
+    justify-content: space-between;
+    padding: 1.2rem;
     width: auto;
   }
 
@@ -122,4 +138,11 @@ code {
     }
   }
 
+}
+
+
+.container.guides {
+  .card-list {
+    padding: 4rem 0;
+  }
 }
