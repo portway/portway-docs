@@ -6,25 +6,12 @@ module.exports = {
     author: `BonkeyϟBong, LLC`,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `portway-documentation`,
-        short_name: `portay docs`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#ffffff`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
     {

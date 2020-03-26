@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import { SITE_TITLE } from '../../constants'
 import SEO from '../components/seo'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
@@ -14,7 +13,7 @@ const Layout = ({ children, className, title }) => {
   })
   return (
     <div className="document">
-      <SEO title={`${title} – ${SITE_TITLE}`} />
+      <SEO title={title} />
       <Header />
       <main className={layoutClasses}>
         {children}
