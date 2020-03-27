@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Helmet } from 'react-helmet'
 
-import { SITE_TITLE } from '../../constants'
+import SEO from '../components/seo'
 import Header from '../components/Header/Header'
+import Footer from '../components/Footer/Footer'
 import GuideComponent from '../components/Guide/GuideComponent'
 import GuidesListContainer from '../components/GuidesList/GuidesListContainer'
 
@@ -11,8 +11,8 @@ import './guidesStyles.scss'
 
 const GuidesLayout = ({ pageContext }) => {
   return (
-    <>
-      <Helmet>{pageContext.guide.name} – {SITE_TITLE}</Helmet>
+    <div className="document">
+      <SEO title={pageContext.guide.name} />
       <Header />
       <main className="guides-container">
         <nav className="guides-container__navigation" role="navigation">
@@ -25,7 +25,8 @@ const GuidesLayout = ({ pageContext }) => {
           <GuideComponent guide={pageContext.guide} />
         </div>
       </main>
-    </>
+      <Footer />
+    </div>
   )
 }
 

@@ -1,13 +1,25 @@
+@import '../styles/inc/include-media';
+
 .guides-container {
   display: flex;
   flex: 1;
+  flex-direction: column;
   max-width: 2024px;
+
+  @include media('>large') {
+    flex-direction: row;
+  }
+
 }
 
 .guides-container__navigation {
-  flex: 0 0 15%;
-  max-width: 400px;
+  order: 2;
   margin: 4rem;
+  @include media('>large') {
+    flex: 0 0 15%;
+    max-width: 400px;
+    order: 1;
+  }
 }
 
 .guides-container__nav-block {
@@ -20,4 +32,10 @@
   display: flex;
   flex: 1;
   justify-content: space-between;
+  margin: 4rem;
+  order: 1;
+  @include media('>large') {
+    margin: 0;
+    order: 2;
+  }
 }

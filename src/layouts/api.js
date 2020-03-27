@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import { SITE_TITLE } from '../../constants'
 import SEO from '../components/seo'
 import Header from '../components/Header/Header'
 
@@ -13,7 +12,7 @@ const APILayout = ({ children, className, title }) => {
   })
   return (
     <>
-      <SEO title={`${title} – ${SITE_TITLE}`} />
+      <SEO title={title} />
       <Header />
       <main className={layoutClasses}>
         {children}

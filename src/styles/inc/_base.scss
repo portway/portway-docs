@@ -118,20 +118,7 @@ html, body {
   white-space: nowrap;
   -webkit-appearance: none;
 }
-.footer {
-  color: var(--color-gray-30);
-  padding: 4rem;
-}
-.footer p {
-  font-size: 1.3rem;
-}
-.footer a {
-  color: var(--color-gray-40);
-}
 @media (hover: hover) {
-  .footer a:hover {
-    color: var(--color-gray-50);
-  }
   .menu a:hover {
     color: var(--theme-header-color);
   }
