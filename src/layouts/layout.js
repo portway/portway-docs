@@ -6,14 +6,14 @@ import SEO from '../components/seo'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 
-const Layout = ({ children, className, title }) => {
+const Layout = ({ children, className, description, title }) => {
   const layoutClasses = cx({
     'container': true,
     [className]: className
   })
   return (
     <div className="document">
-      <SEO title={title} />
+      <SEO title={title} description={description} />
       <Header />
       <main className={layoutClasses}>
         {children}
@@ -26,6 +26,7 @@ const Layout = ({ children, className, title }) => {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  description: PropTypes.string,
   title: PropTypes.string,
 }
 
