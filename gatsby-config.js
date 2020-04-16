@@ -3,6 +3,7 @@ module.exports = {
   siteMetadata: {
     title: `Portway Documentation`,
     description: `A notes app for people who need to do more`,
+    keywords: `Notes, Markdown, API, REST, CMS, Content management system, Developers`,
     author: `BonkeyϟBong, LLC`,
   },
   plugins: [

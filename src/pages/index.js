@@ -8,7 +8,7 @@ import Layout from '../layouts/layout'
 import GuidesCardsContainer from '../components/GuidesCards/GuidesCardsContainer'
 
 const IndexPage = () => (
-  <Layout className="home" title="Home">
+  <Layout className="home" title="Portway Documentation">
     <h1>Portway documentation</h1>
     <p>
       We’re working on guides, sample projects, and more. Are you a developer? Read the{` `}

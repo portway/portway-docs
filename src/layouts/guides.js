@@ -10,9 +10,12 @@ import GuidesListContainer from '../components/GuidesList/GuidesListContainer'
 import './guidesStyles.scss'
 
 const GuidesLayout = ({ pageContext }) => {
+  const guideDescription = pageContext.guide.content.filter((field) => {
+    return field.name === 'description'
+  })
   return (
     <div className="document">
-      <SEO title={pageContext.guide.name} />
+      <SEO title={pageContext.guide.name} description={guideDescription[0].value} />
       <Header />
       <main className="guides-container">
         <nav className="guides-container__navigation" role="navigation">

@@ -5,14 +5,14 @@ import cx from 'classnames'
 import SEO from '../components/seo'
 import Header from '../components/Header/Header'
 
-const APILayout = ({ children, className, title }) => {
+const APILayout = ({ children, className, description, title }) => {
   const layoutClasses = cx({
     'container': false,
     [className]: className
   })
   return (
     <>
-      <SEO title={title} />
+      <SEO title={title} description={description} />
       <Header />
       <main className={layoutClasses}>
         {children}
@@ -24,6 +24,7 @@ const APILayout = ({ children, className, title }) => {
 APILayout.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  description: PropTypes.string,
   title: PropTypes.string,
 }
 

@@ -5,7 +5,7 @@ import Layout from '../layouts/layout'
 import GuidesCardsContainer from '../components/GuidesCards/GuidesCardsContainer'
 
 const GuidesPage = ({ data }) => (
-  <Layout className="guides" title="Guides">
+  <Layout className="guides" title="Guides" description="Examples and tutorials on what you can do with the Portway API">
     <h3>Guides</h3>
     <p>
       Looking for ideas on what to do with Portway? You’ve come to the right place! We’re

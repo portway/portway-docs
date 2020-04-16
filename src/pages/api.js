@@ -5,7 +5,7 @@ import APILayout from '../layouts/api'
 import Redoc from '../components/Redoc/Redoc'
 
 const APIPage = () => (
-  <APILayout className="api" title="API">
+  <APILayout className="api" title="API" description="The Portway API spec">
     <Redoc />
   </APILayout>
 )
