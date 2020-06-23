@@ -10,6 +10,7 @@
     "gatsby": "^2.19.45",
     "gatsby-image": "^2.2.44",
     "gatsby-plugin-offline": "^3.0.41",
+    "gatsby-plugin-react-helmet": "^3.3.5",
     "gatsby-plugin-sass": "^2.1.31",
     "gatsby-source-filesystem": "^2.1.56",
     "marked": "^0.8.1",
