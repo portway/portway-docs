@@ -5,3 +5,19 @@
  */
 
 import './src/styles/global.scss'
+
+const sendPageView = () => {
+  window._gs('GSN-132977-E')
+}
+
+export const onRouteUpdate = ({ location, prevLocation }) => {
+  // Manually track with GoSquared
+  if (`requestAnimationFrame` in window) {
+    requestAnimationFrame(() => {
+      sendPageView()
+    })
+  } else {
+    // simulate 2 rAF calls
+    setTimeout(sendPageView, 32)
+  }
+}
