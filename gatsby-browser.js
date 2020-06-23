@@ -7,7 +7,7 @@
 import './src/styles/global.scss'
 
 const sendPageView = () => {
-  window._gs('GSN-132977-E')
+  window._gs('track')
 }
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
