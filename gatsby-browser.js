@@ -12,12 +12,5 @@ const sendPageView = () => {
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
   // Manually track with GoSquared
-  if (`requestAnimationFrame` in window) {
-    requestAnimationFrame(() => {
-      sendPageView()
-    })
-  } else {
-    // simulate 2 rAF calls
-    setTimeout(sendPageView, 32)
-  }
+  setTimeout(sendPageView, 500)
 }
