@@ -15,7 +15,7 @@ import './GuideStyles.scss'
 import './prism-theme.css'
 
 const HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-const FIELDS_TO_IGNORE = ['card-color', 'card-image']
+const FIELDS_TO_IGNORE = ['card-color', 'card-image', 'social-image']
 const FIELD_TYPES = {
   TEXT: 2,
   IMAGE: 4,

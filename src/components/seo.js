@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
 
-function SEO({ description, keywords, lang, meta, title }) {
+function SEO({ description, keywords, lang, location, meta, socialImage, title }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -29,6 +29,10 @@ function SEO({ description, keywords, lang, meta, title }) {
   const metaTitle = title || site.siteMetadata.title
   const metaDescription = description || site.siteMetadata.description
   const metaKeywords = keywords || site.siteMetadata.keywords
+  const metaImageGeneric = socialImage || 'https://docs.portway.app/social/social_1200.png'
+  const metaImageTwitter = socialImage || 'https://docs.portway.app/social/social_800.png'
+  const metaPath = location && location.pathname ? location.pathname : '/'
+  const metaURL = `https://docs.portway.app${metaPath}`
 
   return (
     <Helmet htmlAttributes={{ lang }} title={title} titleTemplate={`%s | ${site.siteMetadata.title}`}>
@@ -40,15 +44,15 @@ function SEO({ description, keywords, lang, meta, title }) {
       <meta name="twitter:site" content="@portwayapp" />
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:description" content={metaDescription} />
-      <meta name="twitter:image" content="https://docs.portway.app/social/social_800.png" />
+      <meta name="twitter:image" content={metaImageTwitter} />
       <meta name="twitter:image:alt" content="Portway Logo Mark" />
 
       {/* <!-- generic social graph --> */}
       <meta property="og:type" content="business.business" />
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
-      <meta property="og:url" content="https://docs.portway.app/" />
-      <meta property="og:image" content="https://docs.portway.app/social/social_1200.png" />
+      <meta property="og:url" content={metaURL} />
+      <meta property="og:image" content={metaImageGeneric} />
       <meta property="og:image:alt" content="Portway Logo Mark with pattern" />
 
       {/* <!-- apple/opera images --> */}
@@ -74,7 +78,9 @@ SEO.propTypes = {
   description: PropTypes.string,
   keywords: PropTypes.string,
   lang: PropTypes.string,
+  location: PropTypes.object.isRequired,
   meta: PropTypes.arrayOf(PropTypes.object),
+  socialImage: PropTypes.string,
   title: PropTypes.string.isRequired,
 }
 

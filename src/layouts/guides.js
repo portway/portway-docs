@@ -9,13 +9,21 @@ import GuidesListContainer from '../components/GuidesList/GuidesListContainer'
 
 import './guidesStyles.scss'
 
-const GuidesLayout = ({ pageContext }) => {
+const GuidesLayout = ({ location, pageContext }) => {
   const guideDescription = pageContext.guide.content.filter((field) => {
     return field.name === 'description'
   })
+  const guideSocialImage = pageContext.guide.content.filter((field) => {
+    return field.name === 'social-image'
+  })
   return (
     <div className="document">
-      <SEO title={pageContext.guide.name} description={guideDescription[0].value} />
+      <SEO
+        description={guideDescription[0] && guideDescription[0].value}
+        location={location}
+        socialImage={guideSocialImage[0] && guideSocialImage[0].value}
+        title={pageContext.guide.name}
+      />
       <Header />
       <main className="guides-container">
         <nav className="guides-container__navigation" role="navigation">
@@ -34,7 +42,8 @@ const GuidesLayout = ({ pageContext }) => {
 }
 
 GuidesLayout.propTypes = {
-  pageContext: PropTypes.object,
+  location: PropTypes.object.isRequired,
+  pageContext: PropTypes.object.isRequired,
 }
 
 export default GuidesLayout
