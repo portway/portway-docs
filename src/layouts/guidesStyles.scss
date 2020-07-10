@@ -26,6 +26,14 @@
   border-radius: var(--border-radius);
   position: sticky;
   top: 35px;
+
+  h3 {
+    a {
+      color: var(--theme-header-color);
+      text-decoration: none;
+    }
+  }
+
 }
 
 .guides-container__main {

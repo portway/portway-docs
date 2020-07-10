@@ -26,16 +26,16 @@
   }
 
   pre {
-    background-color: var(--color-gray-3);
+    background-color: var(--theme-code-color);
     font-size: 13px;
     padding: 1rem;
     code {
-      background-color: var(--color-gray-3);
+      background-color: var(--theme-code-color);
       padding: 3px;
     }
   }
   code {
-    background-color: var(--color-gray-8);
+    background-color: var(--theme-code-color);
     border-radius: var(--border-radius);
     color: var(--theme-header-color);
     font-size: 13px;

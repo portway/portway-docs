@@ -6,11 +6,11 @@
 
 import './src/styles/global.scss'
 
-const sendPageView = () => {
-  window._gs('track')
-}
+// const sendPageView = () => {
+//   window._gs('track')
+// }
 
-export const onRouteUpdate = ({ location, prevLocation }) => {
-  // Manually track with GoSquared
-  setTimeout(sendPageView, 500)
-}
+// export const onRouteUpdate = ({ location, prevLocation }) => {
+//   // Manually track with GoSquared
+//   setTimeout(sendPageView, 500)
+// }

@@ -1,7 +1,7 @@
 .redoc-wrap {
   .menu-content {
     label[type="tag"] {
-      color: var(--theme-header-color);
+      color: hsl(0, 0%, 10%); // always light mode
     }
     label[role="menuitem"] {
       align-items: center;

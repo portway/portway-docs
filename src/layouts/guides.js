@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'gatsby'
 
+import { PATH_GUIDES } from '../../constants'
 import SEO from '../components/seo'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
@@ -28,7 +30,7 @@ const GuidesLayout = ({ location, pageContext }) => {
       <main className="guides-container">
         <nav className="guides-container__navigation" role="navigation">
           <div className="guides-container__nav-block">
-            <h3>Guides</h3>
+            <h3><Link to={PATH_GUIDES}>Guides</Link></h3>
             <GuidesListContainer />
           </div>
         </nav>
