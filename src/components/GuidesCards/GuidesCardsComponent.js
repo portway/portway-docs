@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import marked from 'marked'
 import cx from 'classnames'
 import { Link } from 'gatsby'
 
@@ -11,12 +10,10 @@ const GuidesCardsComponent = ({ guides }) => {
   return (
     <ul className="card-list">
       {guides && guides.map((guide) => {
-        const slugger = new marked.Slugger()
-        const slug = slugger.slug(guide.node.name)
-        const cardImage = guide.node.content.find(field => field.name === 'card-image')
-        const cardColor = guide.node.content.find(field => field.name === 'card-color')
-        const description = guide.node.content.find(field => field.name === 'description')
-        const difficulty = guide.node.content.find(field => field.name === 'difficulty')
+        const cardImage = guide.node.childrenPortwayField.find(field => field.name === 'card-image')
+        const cardColor = guide.node.childrenPortwayField.find(field => field.name === 'card-color')
+        const description = guide.node.childrenPortwayField.find(field => field.name === 'description')
+        const difficulty = guide.node.childrenPortwayField.find(field => field.name === 'difficulty')
         const difficultyClasses = cx({
           'difficulty__value': true,
           'difficulty__value--easy': difficulty && difficulty.value.toLowerCase() === 'easy',
@@ -27,7 +24,7 @@ const GuidesCardsComponent = ({ guides }) => {
           backgroundColor: cardColor.value,
         }
         return <li key={guide.node.uid} className="card-list__item">
-          <Link className="card" to={`${PATH_GUIDES}/${slug}`}>
+          <Link className="card" to={`${PATH_GUIDES}/${guide.node.slug}`}>
             <div className="card__image" style={cardImageStyles}>
               <img src={cardImage.value} width="200" height="150" alt={cardImage.name} />
             </div>

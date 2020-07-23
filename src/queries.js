@@ -4,12 +4,14 @@
 module.exports = {
   GuidesListWithDescriptions: `
     query GuidesWithDescriptions {
-      allPortwayDocument(filter: {content: {elemMatch: {name: {eq: "description"}}}}) {
+      allPortwayDocument(filter: {childrenPortwayField: {elemMatch: {name: {eq: "description"}}}}) {
         edges {
           node {
-            uid
+            id
             name
-            content {
+            slug
+            uid
+            childrenPortwayField {
               id
               name
               value
@@ -24,22 +26,28 @@ module.exports = {
   FullGuidesQuery: `
     query FullGuidesQuery {
       allPortwayDocument {
-        edges {
-          node {
-            uid
-            name
-            content {
+        nodes {
+          id
+          name
+          slug
+          uid
+          children {
+            id
+            ... on PortwayField {
               id
               name
+              order
+              value
+              documentId
               structuredValue {
-                type
                 tag
+                type
                 children {
                   data
                 }
               }
               type
-              value
+              uid
             }
           }
         }

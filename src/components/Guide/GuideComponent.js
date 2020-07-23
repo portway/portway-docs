@@ -72,10 +72,9 @@ const GuideComponent = ({ guide }) => {
   useEffect(() => {
     if (guide) {
       const slugger = new marked.Slugger()
-      const guideSlug = slugger.slug(guide.name)
       // Create the table of contents
       let tocArray = []
-      guide.content.forEach((field) => {
+      guide.children.forEach((field) => {
         if (field.type === FIELD_TYPES.TEXT) {
           let fieldHeadings = []
           if (field.structuredValue) {
@@ -93,7 +92,7 @@ const GuideComponent = ({ guide }) => {
             key={i}
             ref={createRef()}
           >
-            <a href={`${PATH_GUIDES}/${guideSlug}#${titleSlug}`}>{title.children[0].data}</a>
+            <a href={`${PATH_GUIDES}/${guide.slug}#${titleSlug}`}>{title.children[0].data}</a>
           </li>
         )
       })
@@ -138,7 +137,7 @@ const GuideComponent = ({ guide }) => {
         {guide &&
         <h1>{guide.name}</h1>
         }
-        {guide && guide.content.map((field) => {
+        {guide && guide.children.map((field) => {
           switch (field.type) {
             case FIELD_TYPES.TEXT:
               if (field && field.value) {

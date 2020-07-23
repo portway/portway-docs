@@ -17,7 +17,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-portway',
+      resolve: '@portway/gatsby-source-portway',
       options: {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm9yZ0lkIjoxLCJpYXQiOjE1ODM5NjM0MDUsImlzcyI6ImJvbmtleWJvbmcifQ.WWFbAZzUAQWqBmMQz5o8jqChI_sJ5vLqgtqSAMEoU40',
         projectId: 44
