@@ -12,10 +12,10 @@ import GuidesListContainer from '../components/GuidesList/GuidesListContainer'
 import './guidesStyles.scss'
 
 const GuidesLayout = ({ location, pageContext }) => {
-  const guideDescription = pageContext.guide.content.filter((field) => {
+  const guideDescription = pageContext.guide.children.filter((field) => {
     return field.name === 'description'
   })
-  const guideSocialImage = pageContext.guide.content.filter((field) => {
+  const guideSocialImage = pageContext.guide.children.filter((field) => {
     return field.name === 'social-image'
   })
   return (

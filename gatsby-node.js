@@ -4,7 +4,6 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
 */
 const path = require('path')
-const marked = require('marked')
 const queries = require('./src/queries')
 
 exports.onCreateWebpackConfig = (params) => {
@@ -19,14 +18,12 @@ exports.onCreateWebpackConfig = (params) => {
 
 exports.createPages = async ({ actions, graphql }) => {
   const { data } = await graphql(queries.FullGuidesQuery)
-  data.allPortwayDocument.edges.forEach((edge) => {
-    const document = edge.node
-    const slugger = new marked.Slugger()
-    const slug = slugger.slug(document.name)
+  data.allPortwayDocument.nodes.forEach((node) => {
+    const document = node
     actions.createPage({
-      path: `/guides/${slug}`,
+      path: `/guides/${document.slug}`,
       component: require.resolve('./src/layouts/guides.js'),
-      context: { guide: document, slug: slug }
+      context: { guide: document, slug: document.slug }
     })
   })
 }
