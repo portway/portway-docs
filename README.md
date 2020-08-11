@@ -10,8 +10,16 @@ To get running locally,
 
 ```
 npm install
-gatsby develop
+npm run develop
 ```
+
+This will build the API spec and run gatsby.
+
+Builds can be run with:
+```
+npm run build
+```
+Which will build the spec and run the gatsby build.
 
 ## 💫 Deploy
 
