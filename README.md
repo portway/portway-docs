@@ -10,8 +10,26 @@ To get running locally,
 
 ```
 npm install
-gatsby develop
+npm run develop
 ```
+
+This will build the API spec and run gatsby.
+
+Builds can be run with:
+```
+npm run build
+```
+Which will build the spec and run the gatsby build.
+
+## API Specification
+
+The API specification is OpenAPI v3 compatible. The `openapi-filter` and `redoc` libraries are used
+to generate, validate, and view the spec.
+
+To update the spec, in the `spec/` folder make changes, then run `npm run develop` to view them on
+the site in redoc. Commit all the changed files, as the gatsby build/deploy process does not update
+the spec.
+
 
 ## 💫 Deploy
 
