@@ -293,6 +293,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/export":
+    get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Returns a url to an archived copy of the project
+      operationId: exportProjectById
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of project to export
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: project response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   "/projects/{projectId}/documents":
     get:
       security:
