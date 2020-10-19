@@ -1,0 +1,35 @@
+ProjectWebhook:
+  allOf:
+    - $ref: '#/NewProjectWebhook'
+    - required:
+        - id
+    - properties:
+        id:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        projectId:
+          type: integer
+        # url:
+        #   type: string
+
+NewProjectWebhook:
+  required:
+    - url
+  properties:
+    active:
+      type: boolean
+    url:
+      type: string
+
+# Need this schema? Same as new but url not required
+UpdateProjectWebhook:
+  properties:
+    url:
+      type: string
+    active:
+      type: boolean
