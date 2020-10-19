@@ -242,7 +242,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
     delete:
       security:
         - projectJWT: []
@@ -889,7 +888,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-# WEBHOOKS START HERE
+# WEBHOOKS START
 
   /projects/{projectId}/webhooks:
     get:
@@ -950,7 +949,7 @@ paths:
               $ref: './definitions/projectWebhook.yml#/NewProjectWebhook'
       responses:
         '201':
-          description: document response
+          description: webhook response
           content:
             application/json:
               schema:
@@ -965,7 +964,123 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-# WEBHOOKS STOP THERE
+  /projects/{projectId}/webhooks/{webhookId}:
+    get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Returns a project webhook based on a single ID
+      operationId: findProjectWebhookById
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: ID of project webhook to fetch
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: project webhook response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: './definitions/projectWebhook.yml#/ProjectWebhook'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Update a project webhook based on a single ID
+      operationId: updateProjectWebhook
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: ID of project webhook to update
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        description: Project webhook body to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './definitions/projectWebhook.yml#/UpdateProjectWebhook'
+      responses:
+        '200':
+          description: project webhook response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: './definitions/projectWebhook.yml#/ProjectWebhook'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: deletes a single project webhook based on the ID supplied
+      operationId: deleteProjectWebhook
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: ID of project webhook to delete
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '204':
+          description: project webhook deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+# WEBHOOKS END
 
   /documents/{documentId}:
     get:

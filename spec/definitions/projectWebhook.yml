@@ -26,7 +26,6 @@ NewProjectWebhook:
     url:
       type: string
 
-# Need this schema? Same as new but url not required
 UpdateProjectWebhook:
   properties:
     url:
