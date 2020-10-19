@@ -14,8 +14,6 @@ ProjectWebhook:
           format: date-time
         projectId:
           type: integer
-        # url:
-        #   type: string
 
 NewProjectWebhook:
   required:
@@ -32,3 +30,15 @@ UpdateProjectWebhook:
       type: string
     active:
       type: boolean
+
+ProjectWebhookDelivery:
+  properties:
+    id:
+      type: integer
+    createdAt:
+      type: string
+      format: date-time
+    webhookId:
+      type: integer
+    resultCode:
+      type: integer

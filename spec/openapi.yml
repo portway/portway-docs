@@ -1080,6 +1080,47 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /projects/{projectId}/webhooks/{webhookId}/deliveries:
+    get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Returns all webhook deliveries for the given webhook id
+      operationId: findProjectWebhookDeliveries
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: find deliveries for given webhook ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: webhooks deliveries response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: './definitions/projectWebhook.yml#/ProjectWebhookDelivery'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 # WEBHOOKS END
 
   /documents/{documentId}:
