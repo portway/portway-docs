@@ -1,0 +1,44 @@
+ProjectWebhook:
+  allOf:
+    - $ref: '#/NewProjectWebhook'
+    - required:
+        - id
+    - properties:
+        id:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        projectId:
+          type: integer
+
+NewProjectWebhook:
+  required:
+    - url
+  properties:
+    active:
+      type: boolean
+    url:
+      type: string
+
+UpdateProjectWebhook:
+  properties:
+    url:
+      type: string
+    active:
+      type: boolean
+
+ProjectWebhookDelivery:
+  properties:
+    id:
+      type: integer
+    createdAt:
+      type: string
+      format: date-time
+    webhookId:
+      type: integer
+    resultCode:
+      type: integer

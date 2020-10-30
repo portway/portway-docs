@@ -106,6 +106,8 @@ tags:
     description: Project assignments. Use includeUser=true query param on GET requests to include full user objects.
   - name: Project Tokens
     description: Project API access tokens
+  - name: Project Webhooks
+    description: Webhooks for a project
   - name: Organizations
     description: PRIVATE - GET/UPDATE an organization.
   - name: Billing
@@ -131,6 +133,7 @@ x-tagGroups:
     tags:
       - Projects
       - Project Tokens
+      - Project Webhooks
       - Project Assignments
   - name: Documents
     tags:
@@ -885,6 +888,230 @@ paths:
       responses:
         "204":
           description: project token deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/webhooks":
+    get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Returns all webhooks for the given project id
+      operationId: findProjectWebhooks
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: webhooks response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: ./definitions/projectWebhook.yml#/ProjectWebhook
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Creates a new webhook
+      operationId: addProjectWebhook
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: webhook to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./definitions/projectWebhook.yml#/NewProjectWebhook
+      responses:
+        "201":
+          description: webhook response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ./definitions/projectWebhook.yml#/ProjectWebhook
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/webhooks/{webhookId}":
+    get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Returns a project webhook based on a single ID
+      operationId: findProjectWebhookById
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: ID of project webhook to fetch
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: project webhook response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ./definitions/projectWebhook.yml#/ProjectWebhook
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Update a project webhook based on a single ID
+      operationId: updateProjectWebhook
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: ID of project webhook to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Project webhook body to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./definitions/projectWebhook.yml#/UpdateProjectWebhook
+      responses:
+        "200":
+          description: project webhook response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ./definitions/projectWebhook.yml#/ProjectWebhook
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: deletes a single project webhook based on the ID supplied
+      operationId: deleteProjectWebhook
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: ID of project webhook to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: project webhook deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/projects/{projectId}/webhooks/{webhookId}/deliveries":
+    get:
+      security:
+        - projectJWT: []
+        - bearerJWT: []
+      description: Returns all webhook deliveries for the given webhook id
+      operationId: findProjectWebhookDeliveries
+      tags:
+        - Project Webhooks
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of parent project
+          required: true
+          schema:
+            type: integer
+        - name: webhookId
+          in: path
+          description: find deliveries for given webhook ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: webhooks deliveries response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: ./definitions/projectWebhook.yml#/ProjectWebhookDelivery
         default:
           description: unexpected error
           content:
