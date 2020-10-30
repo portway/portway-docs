@@ -29,6 +29,7 @@ NewField:
     - $ref: '#/NumberField'
     - $ref: '#/ImageField'
     - $ref: '#/DateField'
+    - $ref: '#/FileField'
 
 UpdateField:
   properties:
@@ -117,6 +118,22 @@ DateField:
       type: string
       description: An ISO 8601 date string also supporting the RFC 3339 profile. Almost all libraries will output a compliant date string.
       example: '2020-01-03T14:30'
+
+FileField:
+  title: File
+  required:
+    - name
+    - type
+  properties:
+    name:
+      type: string
+    type:
+      type: integer
+      enum: [6]
+    value:
+      type: string
+      description: Url of uploaded file
+      example: 'https://www.example.com/notes.txt'
 
 FieldOrder:
   properties:
