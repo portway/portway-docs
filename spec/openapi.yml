@@ -55,7 +55,7 @@ info:
 
     **Example:**
     ```bash
-    curl -H "Authorization: Bearer <TOKEN>" https://api.dev.portway.app/api/v1/projects
+    curl -H "Authorization: Bearer <TOKEN>" https://api.portway.app/api/v1/projects
     ```
 
 servers:
