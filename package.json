@@ -5,7 +5,7 @@
   "version": "2020.3.20.10",
   "author": "BonkeyBong, LLC",
   "dependencies": {
-    "@portway/gatsby-source-portway": "^1.1.0",
+    "@portway/gatsby-source-portway": "^1.1.1",
     "classnames": "^2.2.6",
     "core-js": "^3.8.3",
     "gatsby": "^2.31.1",
