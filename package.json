@@ -14,7 +14,7 @@
     "gatsby-plugin-sass": "^2.8.0",
     "gatsby-source-filesystem": "^2.10.0",
     "marked": "^0.8.2",
-    "mobx": "^5.15.7",
+    "mobx": "^6.1.0",
     "node-sass": "^4.14.1",
     "openapi-filter": "^1.5.1",
     "prismjs": "^1.23.0",
@@ -22,7 +22,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-helmet": "^5.2.1",
-    "redoc": "^2.0.0-rc.45",
+    "redoc": "^2.0.0-rc.48",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
