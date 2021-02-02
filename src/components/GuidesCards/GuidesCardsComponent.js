@@ -26,7 +26,7 @@ const GuidesCardsComponent = ({ guides }) => {
         return <li key={guide.node.uid} className="card-list__item">
           <Link className="card" to={`${PATH_GUIDES}/${guide.node.slug}`}>
             <div className="card__image" style={cardImageStyles}>
-              <img src={cardImage.value} width="200" height="150" alt={cardImage.name} />
+              <img src={cardImage.value} width="320" height="198" alt={cardImage.name} />
             </div>
             <div className="card__content">
               <h3>{guide.node.name}</h3>

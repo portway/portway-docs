@@ -91,7 +91,13 @@ code {
   .card__image {
     align-items: center;
     display: flex;
+    height: 200px;
     justify-content: center;
+
+    @include media('>large') {
+      height: 235px;
+    }
+
     img {
       height: auto;
       max-width: 100%;
