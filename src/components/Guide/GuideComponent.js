@@ -113,9 +113,11 @@ const GuideComponent = ({ guide }) => {
             headings.forEach((heading) => {
               const topValue = heading.getBoundingClientRect().top
               const bottomValue = window.innerHeight - heading.getBoundingClientRect().bottom
-              if (percentScrolled <= 50 && topValue < 150 && topValue > 0) {
+              if (percentScrolled <= 50 && topValue < 170 && topValue > 0) {
                 highlightTocItem(heading.getAttribute('id'))
-              } else if (percentScrolled >= 50 && bottomValue > 150 && bottomValue < 1000) {
+              } else if (percentScrolled <= 50 && bottomValue > topValue && bottomValue < 1000) {
+                highlightTocItem(heading.getAttribute('id'))
+              } else if (percentScrolled >= 50 && bottomValue > topValue && bottomValue < 1000) {
                 highlightTocItem(heading.getAttribute('id'))
               }
             })
@@ -125,9 +127,11 @@ const GuideComponent = ({ guide }) => {
         }
       }
       document.addEventListener('scroll', scrollHandler, { passive: true })
+      document.addEventListener('hashchange', scrollHandler, { passive: true })
     }
     return () => {
       document.removeEventListener('scroll', scrollHandler, { passive: true })
+      document.removeEventListener('hashchange', scrollHandler, { passive: true })
     }
   }, [guide, tableOfContents.length])
 
