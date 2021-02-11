@@ -13,6 +13,7 @@ export default function HTML(props) {
         <meta name="theme-color" content="#F2F2F2" />
         <link rel="author" href="humans.txt" />
         {props.headComponents}
+        <script src="https://swordtail.getportway.com/script.js" data-spa="auto" data-site="MPLGJJAJ" defer></script>
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
