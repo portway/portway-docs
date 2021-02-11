@@ -8,6 +8,7 @@
 
 .guide__content {
   max-width: 900px;
+  overflow-x: hidden;
 
   @include media('>large') {
     padding: 4rem 2rem;
@@ -29,6 +30,7 @@
     background-color: var(--theme-code-color);
     font-size: 13px;
     padding: 1rem;
+    overflow-x: auto;
     code {
       background-color: var(--theme-code-color);
       padding: 3px;
