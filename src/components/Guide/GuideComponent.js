@@ -57,7 +57,7 @@ const GuideComponent = ({ guide }) => {
     }
   }
 
-  // Set up window scroll values
+  // Set up the table of contents
   useEffect(() => {
     const windowHeight = window.innerHeight
     const documentHeight = document.body.offsetHeight
@@ -66,10 +66,7 @@ const GuideComponent = ({ guide }) => {
     tocItemsRef.current = []
     tocActiveItemRef.current = null
     tickingRef.current = false
-  }, [guide])
 
-  // Set up the table of contents
-  useEffect(() => {
     if (guide) {
       const slugger = new marked.Slugger()
       // Create the table of contents
