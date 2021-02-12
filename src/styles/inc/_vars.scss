@@ -1,5 +1,8 @@
+@import './inc/include-media';
+
 // New CSS variables to replace the below ones
 :root {
+  --container-padding: 16px;
   // Border-radius should be the same everywhere
   --border-radius: 2px;
   --box-shadow: 0 2px 6px 0 rgba(102, 102, 102, 0.40);
@@ -15,6 +18,12 @@
   --icon-margin: .6rem;
   @media (prefers-color-scheme: dark) {
     --box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .9);
+  }
+  @include media('>=medium') {
+    --container-padding: 32px;
+  }
+  @include media('>=large') {
+    --container-padding: 64px;
   }
 }
 

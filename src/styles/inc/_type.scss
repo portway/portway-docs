@@ -1,60 +1,79 @@
 :root {
   --type-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  --type-serif: Domine, Georgia, serif;
 }
 
-body {
+html, body {
   font-weight: 300;
-  color: #333;
+  font-size: 62.5%;
+  color: var(--theme-text-color);
 }
 
 .centered {
   text-align: center;
 }
 
-h1, h2 {
-  // font-family: var(--type-serif);
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--type-sans-serif);
+  font-weight: 200;
+  margin: 0;
+  &.heading--bold {
+    font-weight: 500;
+  }
 }
 
-h3, h4, h5, h6 {
-  font-family: var(--type-sans-serif);
+h1 {
+  font-size: 4.8rem;
+  font-size: clamp(1rem, 10.5vw, 4.8rem);
+  line-height: 6rem;
 }
 
 h2 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  line-height: 4.4rem;
-  margin: 0 0 1.2rem;
+  font-size: 4rem;
+  font-size: clamp(1rem, 8.5vw, 4rem);
+  line-height: 4rem;
 }
 
 h3 {
-  font-size: 1.7rem;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-  line-height: 2.7rem;
-  margin: 0 0 1.3rem;
-  &.normal {
-    font-weight: 300;
+  font-size: 3.2rem;
+  font-size: clamp(1rem, 7.5vw, 3.2rem);
+  line-height: 4.2rem;
+  &.heading-3--normal {
+    font-size: 2.8rem;
+    line-height: 3.8rem;
   }
 }
 
 h4 {
-  font-size: 1.7rem;
-  font-weight: normal;
-  letter-spacing: -0.3px;
-  line-height: 2.7rem;
-  margin: 0 0 1.3rem;
+  font-size: 2.2rem;
+  line-height: 3rem;
 }
 
-p, div, li, footer {
-  font-size: 1.5rem;
-  font-weight: 400;
-  letter-spacing: -0.2px;
-  line-height: 2.4rem;
+p, div, li, footer, input {
+  font-family: var(--type-sans-serif);
+  font-size: 1.6rem;
+  line-height: 2.2rem;
 }
 
 p {
-  margin: 0 0 1.2rem;
+  margin: 0 0 1.2rem 0;
 }
 
+input, textarea {
+  font-family: var(--type-sans-serif);
+  font-size: 1.6rem;
+  padding: 6px;
+}
+
+.text--large {
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+}
+
+small, .text--small {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+}
+
+b, strong {
+  font-weight: 500;
+}

@@ -69,7 +69,7 @@ const Redoc = () => {
       }
     },
     menu: {
-      backgroundColor: 'hsl(0, 0%, 97%)',
+      backgroundColor: 'transparent',
     },
     rightPanel: {
       // backgroundColor: 'hsl(0, 0%, 94%)',
