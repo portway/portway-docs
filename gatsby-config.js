@@ -1,9 +1,13 @@
 /* eslint-disable camelcase */
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Portway Documentation`,
-    description: `A notes app for people who need to do more`,
-    keywords: `Notes, Markdown, API, REST, CMS, Content management system, Developers`,
+    description: `Work on a range of content projects with your team, on any device.`,
+    keywords: `Documents, Notes, Collaborative, Writing, Markdown, API, REST, Developers, GatsbyJS, 11ty, Headless CMS`,
     author: `BonkeyϟBong, LLC`,
   },
   plugins: [
@@ -19,8 +23,9 @@ module.exports = {
     {
       resolve: '@portway/gatsby-source-portway',
       options: {
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm9yZ0lkIjoxLCJpYXQiOjE1ODM5NjM0MDUsImlzcyI6ImJvbmtleWJvbmcifQ.WWFbAZzUAQWqBmMQz5o8jqChI_sJ5vLqgtqSAMEoU40',
-        projectId: 44
+        draft: process.env.PORTWAY_DRAFT,
+        token: process.env.PORTWAY_TOKEN,
+        projectId: process.env.PORTWAY_PROJECT_ID
       }
     }
     // this (optional) plugin enables Progressive Web App + Offline functionality

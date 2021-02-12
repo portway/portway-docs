@@ -64,6 +64,7 @@
   --theme-border: var(--color-gray-10);
   --theme-border-light: var(--color-gray-5);
   --theme-code-color: var(--color-gray-8);
+  --theme-code-text-color: #5c6e74;
 
   --base-background: var(--color-white);
   --base-color: var(--color-gray-60);
@@ -87,6 +88,7 @@
     --theme-border: hsl(218, 7%, 24%);
     --theme-border-light: hsl(223, 7%, 19%);
     --theme-code-color: var(--color-gray-70);
+    --theme-code-text-color: #71c5e0;
 
     --base-background: hsl(61, 1%, 21%);
     --base-color: hsl(106, 0%, 89%);

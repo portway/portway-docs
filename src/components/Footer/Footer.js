@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer__copyright">
         <p>
           Portway &copy; {new Date().getFullYear()} <a href="https://bonkeybong.com/">BonkeyBong, LLC</a><br />
-          Built using <a href="https://getportway.com/">Portway</a> &amp; <a href="https://gatsbyjs.org">Gatsby</a>
+          Built using <a href="https://getportway.com/">Portway</a>
         </p>
       </div>
     </footer>
