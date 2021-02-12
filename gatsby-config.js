@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
-require("dotenv").config({
+require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
   siteMetadata: {
     title: `Portway Documentation`,
-    description: `A notes app for people who need to do more`,
-    keywords: `Notes, Markdown, API, REST, CMS, Content management system, Developers`,
+    description: `Work on a range of content projects with your team, on any device.`,
+    keywords: `Documents, Notes, Collaborative, Writing, Markdown, API, REST, Developers, GatsbyJS, 11ty, Headless CMS`,
     author: `BonkeyϟBong, LLC`,
   },
   plugins: [
