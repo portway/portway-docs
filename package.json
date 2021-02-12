@@ -37,7 +37,7 @@
   "keywords": [],
   "license": "MIT",
   "scripts": {
-    "build": "npm run generate-spec && gatsby build",
+    "build": "gatsby build",
     "develop": "npm run generate-spec && gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
