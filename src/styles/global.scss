@@ -35,6 +35,21 @@ a {
   }
 }
 
+.text-link {
+  color: var(--theme-text-color);
+  font-weight: 500;
+  text-decoration: none;
+  &:hover, &:focus, &:visited {
+    color: var(--theme-text-color);
+    filter: brightness(85%);
+    text-decoration: underline;
+  }
+  &:active {
+    color: var(--theme-text-color);
+    filter: brightness(115%);
+  }
+}
+
 p {
   max-width: 750px;
 }
@@ -56,6 +71,7 @@ code {
 }
 
 .document {
+  align-items: center;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -67,7 +83,7 @@ code {
 
 .card-list {
   display: grid;
-  gap: 2rem;
+  gap: 3rem;
   grid-auto-rows: 1fr;
   grid-template-columns: 1fr;
   list-style: none;
@@ -107,6 +123,9 @@ code {
   .card__content {
     flex: 1;
     padding: 1.2rem;
+    h3 {
+      font-size: 2.8rem;
+    }
   }
 
   .card__meta {

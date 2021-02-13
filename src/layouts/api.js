@@ -7,17 +7,17 @@ import Header from '../components/Header/Header'
 
 const APILayout = ({ children, className, description, location, title }) => {
   const layoutClasses = cx({
-    'container': false,
+    'container': true,
     [className]: className
   })
   return (
-    <>
+    <div className="document">
       <SEO title={title} description={description} location={location} />
       <Header />
       <main className={layoutClasses}>
         {children}
       </main>
-    </>
+    </div>
   )
 }
 
