@@ -8,14 +8,22 @@ This site uses Gatsby and consumes content from Portway using a gatsby source pl
 
 To get running locally,
 
-```
-npm install
-npm run develop
-```
+1. Create a .env.development file with the following:
+    ```
+    PORTWAY_TOKEN=
+    PORTWAY_PROJECT_ID=44
+    PORTWAY_DRAFT=true
+    ```
+2. Then run the following:
+    ```
+    npm install
+    npm run develop
+    ```
 
 This will build the API spec and run gatsby.
 
 Builds can be run with:
+
 ```
 npm run build
 ```
