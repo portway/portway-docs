@@ -43,6 +43,7 @@
   flex: 1;
   justify-content: space-between;
   margin: 4rem;
+  min-width: 0;
   order: 1;
   @include media('>large') {
     margin: 0;
