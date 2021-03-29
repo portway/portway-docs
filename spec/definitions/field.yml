@@ -53,6 +53,9 @@ StringField:
       enum: [1]
     value:
       type: string
+    renderedValue:
+      type: string
+      description: HTML output of the field's value, for easy rendering
 
 TextField:
   title: Text
@@ -67,6 +70,9 @@ TextField:
       enum: [2]
     value:
       type: string
+    renderedValue:
+      type: string
+      description: HTML output of the field's value, for easy rendering
     structuredValue:
       type: string
 
@@ -86,6 +92,9 @@ NumberField:
       format: double
       description: Number value with maximum of 15 significant digits (including decimal digits).
         For longer numbers we recommend storing as a string and parsing the value in your code.
+    renderedValue:
+      type: string
+      description: HTML output of the field's value, for easy rendering
 
 ImageField:
   title: Image
@@ -98,10 +107,40 @@ ImageField:
     type:
       type: integer
       enum: [4]
+    alignment:
+      type: string
+      description: Image alignment - left, center, or right
+    alt:
+      type: string
+      description: Image alt text
+    formats:
+      type: object
+      properties:
+        original:
+          type: object
+          properties:
+            full:
+              type: string
+              description: URL path to full size, original image source
+            half:
+              type: string
+              description: URL path to half size, original image source
+        webp:
+          type: object
+          properties:
+            full:
+              type: string
+              description: URL path to full size, webp version of image
+            half:
+              type: string
+              description: URL path to half size, webp version of image
     value:
       type: string
       description: Url of uploaded image
       example: 'https://www.google.com/test-image'
+    renderedValue:
+      type: string
+      description: HTML output of the field's value, for easy rendering
 
 DateField:
   title: Date
@@ -118,6 +157,9 @@ DateField:
       type: string
       description: An ISO 8601 date string also supporting the RFC 3339 profile. Almost all libraries will output a compliant date string.
       example: '2020-01-03T14:30'
+    renderedValue:
+      type: string
+      description: HTML output of the field’s value, for easy rendering
 
 FileField:
   title: File
@@ -134,6 +176,9 @@ FileField:
       type: string
       description: Url of uploaded file
       example: 'https://www.example.com/notes.txt'
+    renderedValue:
+      type: string
+      description: HTML output of the field's value, for easy rendering
 
 FieldOrder:
   properties:
