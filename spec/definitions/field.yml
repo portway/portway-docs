@@ -125,6 +125,9 @@ ImageField:
             half:
               type: string
               description: URL path to half size, original image source
+            mimeType:
+              type: string
+              description: The original image’s MIME type
         webp:
           type: object
           properties:
@@ -134,13 +137,16 @@ ImageField:
             half:
               type: string
               description: URL path to half size, webp version of image
+            mimeType:
+              type: string
+              description: The WebP MIME type
     value:
       type: string
       description: Url of uploaded image
       example: 'https://www.google.com/test-image'
     renderedValue:
       type: string
-      description: HTML output of the field's value, for easy rendering
+      description: HTML output of a retina picture element, for easy rendering
 
 DateField:
   title: Date

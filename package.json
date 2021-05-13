@@ -38,7 +38,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run generate-spec && gatsby build",
-    "develop": "npm run generate-spec && gatsby develop",
+    "develop": "NODE_ENV=development npm run generate-spec && gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
